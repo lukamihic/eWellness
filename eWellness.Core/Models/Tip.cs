@@ -1,6 +1,8 @@
-﻿namespace eWellness.Core.Models
+﻿using eWellness.Core.Common.Models;
+
+namespace eWellness.Core.Models
 {
-    public class Tip : BaseModel
+    public class Tip : BaseModel, ITip
     {
         public string Name { get; set; } = null!;
         public string? Description { get; set; }

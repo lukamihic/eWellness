@@ -10,4 +10,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\eWellness.Core.Common\eWellness.Core.Common.csproj" />
+    <ProjectReference Include="..\eWellness.Core\eWellness.Core.csproj" />
+  </ItemGroup>
+
 </Project>

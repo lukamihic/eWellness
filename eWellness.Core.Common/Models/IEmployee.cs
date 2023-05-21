@@ -6,6 +6,5 @@
         public string Position { get; set; }
 
         public int? UserId { get; set; }
-        public IUser? User { get; set; }
     }
 }

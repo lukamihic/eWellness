@@ -9,7 +9,7 @@ namespace eWellness.Core.Models
         public bool IsMember { get; set; }
         public DateTime MembershipExpirationDate { get; set; }
 
-        public IUser? User { get; set; }
+        public User? User { get; set; }
         public int? UserId { get; set; }
     }
 }

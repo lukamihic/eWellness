@@ -5,16 +5,16 @@ namespace eWellness.Core.Models
     public class Appointment : BaseModel, IAppointment
     {
         public int? ClientId { get; set; }
-        public IClient? Client { get; set; }
+        public Client? Client { get; set; }
 
         public int? EmployeeId { get; set; }
-        public IEmployee? Employee { get; set; }
+        public Employee? Employee { get; set; }
 
         public int ServiceId { get; set; }
-        public IService Service { get; set; } = null!;
+        public Service Service { get; set; } = null!;
 
         public int? SpecialOfferId { get; set; }
-        public ISpecialOffer? SpecialOffer { get; set; }
+        public SpecialOffer? SpecialOffer { get; set; }
 
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }

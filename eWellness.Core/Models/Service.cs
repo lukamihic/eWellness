@@ -12,6 +12,6 @@ namespace eWellness.Core.Models
         public string ImageUrl { get; set; } = null!;
 
         public int ServiceCategoryId { get; set; }
-        public IServiceCategory ServiceCategory { get; set; } = null!;
+        public ServiceCategory ServiceCategory { get; set; } = null!;
     }
 }

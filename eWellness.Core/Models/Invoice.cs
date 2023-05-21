@@ -1,6 +1,8 @@
-﻿namespace eWellness.Core.Models
+﻿using eWellness.Core.Common.Models;
+
+namespace eWellness.Core.Models
 {
-    public class Invoice : BaseModel
+    public class Invoice : BaseModel, IInvoice
     {
         public int? AppointmentId { get; set; }
         public Appointment Appointment { get; set; } = null!;

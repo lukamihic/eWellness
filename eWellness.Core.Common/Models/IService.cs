@@ -10,6 +10,5 @@
         public string ImageUrl { get; set; }
 
         public int ServiceCategoryId { get; set; }
-        public IServiceCategory ServiceCategory { get; set; }
     }
 }

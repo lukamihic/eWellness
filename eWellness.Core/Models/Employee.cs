@@ -8,7 +8,7 @@ namespace eWellness.Core.Models
         public string Position { get; set; } = null!;
 
         public int? UserId { get; set; }
-        public IUser? User { get; set; }
+        public User? User { get; set; }
     }
 
 }

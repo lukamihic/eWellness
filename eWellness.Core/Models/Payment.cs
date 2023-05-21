@@ -1,6 +1,8 @@
-﻿namespace eWellness.Core.Models
+﻿using eWellness.Core.Common.Models;
+
+namespace eWellness.Core.Models
 {
-    public class Payment : BaseModel
+    public class Payment : BaseModel, IPayment
     {
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }

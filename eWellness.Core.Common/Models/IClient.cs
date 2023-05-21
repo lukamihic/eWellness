@@ -7,7 +7,6 @@
         public bool IsMember { get; set; }
         public DateTime MembershipExpirationDate { get; set; }
 
-        public IUser? User { get; set; }
         public int? UserId { get; set; }
     }
 }

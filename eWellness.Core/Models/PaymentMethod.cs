@@ -1,6 +1,8 @@
-﻿namespace eWellness.Core.Models
+﻿using eWellness.Core.Common.Models;
+
+namespace eWellness.Core.Models
 {
-    public class PaymentMethod : BaseModel
+    public class PaymentMethod : BaseModel, IPaymentMethod
     {
         public string Name { get; set; } = null!;
         public string? Description { get; set; }

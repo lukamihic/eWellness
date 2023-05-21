@@ -1,5 +1,6 @@
-﻿using eWellness.Core.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+
+using eWellness.Core.Models;
 
 namespace eWellness.Core
 {

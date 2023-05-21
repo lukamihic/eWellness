@@ -6,4 +6,13 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\eWellness.Core.Common\eWellness.Core.Common.csproj" />
+    <ProjectReference Include="..\eWellness.Core\eWellness.Core.csproj" />
+  </ItemGroup>
+
 </Project>

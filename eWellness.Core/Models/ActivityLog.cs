@@ -11,6 +11,6 @@ namespace eWellness.Core.Models
         public string? Device { get; set; }
 
         public int? UserId { get; set; }
-        public IUser? User { get; set; }
+        public User? User { get; set; }
     }
 }
