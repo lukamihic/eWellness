@@ -7,7 +7,7 @@ namespace eWellness.DL.Common
         ValueTask<EntityEntry<T>> AddAsync(T entity);
         Task AddRangeAsync(IEnumerable<T> entities);
 
-        void Remove(T entity);
+        void Remove(T entity, bool soft = true);
         void RemoveRange(IEnumerable<T> entities);
 
         void Update(T entity);

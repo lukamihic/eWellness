@@ -21,36 +21,53 @@ namespace eWellness.DL
 
         public virtual ValueTask<EntityEntry<T>> AddAsync(T entity)
         {
-            return DatabaseContext.Set<T>().AddAsync(entity);
+            var result = DatabaseContext.Set<T>().AddAsync(entity);
+            DatabaseContext.SaveChanges();
+
+            return result;
         }
 
         public virtual Task AddRangeAsync(IEnumerable<T> entities)
         {
-            return DatabaseContext.Set<T>().AddRangeAsync(entities);
+            var result = DatabaseContext.Set<T>().AddRangeAsync(entities);
+            DatabaseContext.SaveChanges();
+
+            return result;
         }
 
-        public virtual void Remove(T entity)
+        public virtual void Remove(T entity, bool soft = true)
         {
-            DatabaseContext.Set<T>().Remove(entity);
+            if(soft)
+            {
+                entity.IsDeleted = true;
+                Update(entity);
+            } else
+            {
+                DatabaseContext.Set<T>().Remove(entity);
+                DatabaseContext.SaveChanges();
+            }
         }
 
         public virtual void RemoveRange(IEnumerable<T> entities)
         {
-
             foreach (var entity in entities)
             {
                 entity.IsDeleted = true;
             }
+            UpdateRange(entities);
+            DatabaseContext.SaveChanges();
         }
 
         public virtual void Update(T entity)
         {
             DatabaseContext.Set<T>().Update(entity);
+            DatabaseContext.SaveChanges();
         }
 
         public virtual void UpdateRange(IEnumerable<T> entities)
         {
             DatabaseContext.Set<T>().UpdateRange(entities);
+            DatabaseContext.SaveChanges();
         }
 
         public virtual Task<T> GetByIdAsync(TPrimaryKey id, bool asNoTracking = false)
