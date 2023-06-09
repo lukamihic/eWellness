@@ -1,7 +1,7 @@
 ﻿using eWellness.BL.Common;
-using eWellness.Core.Common.Models;
 using eWellness.Core.Models;
 using eWellness.DL.Common;
+
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace eWellness.BL
