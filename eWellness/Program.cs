@@ -29,12 +29,22 @@ IMapper mapper = mapperConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
 
 // Service mappings
-//// ActivityLog
+//// ActivityLogs
 builder.Services.AddScoped<IActivityLogRepository, ActivityLogRepository>();
 builder.Services.AddScoped<IActivityLogService, ActivityLogService>();
 //// Users
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
+//// Tips
+builder.Services.AddScoped<ITipRepository, TipRepository>();
+builder.Services.AddScoped<ITipService, TipService>();
+//// ServiceCategories
+builder.Services.AddScoped<IServiceCategoryRepository, ServiceCategoryRepository>();
+builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
+//// SpecialOffers
+builder.Services.AddScoped<ISpecialOfferRepository, SpecialOfferRepository>();
+builder.Services.AddScoped<ISpecialOfferService, SpecialOfferService>();
+
 
 var app = builder.Build();
 
