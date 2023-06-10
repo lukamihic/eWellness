@@ -15,42 +15,42 @@ namespace eWellness.BL
             _employeeRepository = employeeRepository;
         }
 
-        public virtual ValueTask<EntityEntry<Employee>> AddAsync(Employee entity)
+        public ValueTask<EntityEntry<Employee>> AddAsync(Employee entity)
         {
             return _employeeRepository.AddAsync(entity);
         }
 
-        public virtual Task AddRangeAsync(IEnumerable<Employee> entities)
+        public Task AddRangeAsync(IEnumerable<Employee> entities)
         {
             return _employeeRepository.AddRangeAsync(entities);
         }
 
-        public virtual void Remove(Employee entity)
+        public void Remove(Employee entity)
         {
             _employeeRepository.Remove(entity);
         }
 
-        public virtual void RemoveRange(IEnumerable<Employee> entities)
+        public void RemoveRange(IEnumerable<Employee> entities)
         {
             _employeeRepository.RemoveRange(entities);
         }
 
-        public virtual void Update(Employee entity)
+        public void Update(Employee entity)
         {
             _employeeRepository.Update(entity);
         }
 
-        public virtual void UpdateRange(IEnumerable<Employee> entities)
+        public void UpdateRange(IEnumerable<Employee> entities)
         {
             _employeeRepository.UpdateRange(entities);
         }
 
-        public virtual Task<Employee> GetByIdAsync(int id, bool asNoTracking = false)
+        public Task<Employee> GetByIdAsync(int id, bool asNoTracking = false)
         {
             return _employeeRepository.GetByIdAsync(id, asNoTracking);
         }
 
-        public virtual void Attach(Employee entity)
+        public void Attach(Employee entity)
         {
             _employeeRepository.Attach(entity);
         }

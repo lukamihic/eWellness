@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using eWellness.Core;
 using eWellness.Core.Common.Models;
 using eWellness.DL.Common;
+using eWellness.Core.Filters;
 
 namespace eWellness.DL
 {
@@ -78,6 +79,14 @@ namespace eWellness.DL
                 dbSet = dbSet.AsNoTracking();
 
             return dbSet.SingleOrDefaultAsync(e => !e.IsDeleted && Equals(e.Id, id))!;
+        }
+
+        public virtual Task<List<T>> Filter(BasePagingParameters parameters)
+        {
+            var dbSet = DatabaseContext.Set<T>().AsQueryable();
+            if (parameters.DescendingSort)
+                return Task.FromResult(dbSet.Where(t => !t.IsDeleted).OrderByDescending(t => t.Id).Take(parameters.PageSize).Skip(parameters.PageSize * (parameters.PageNumber - 1)).ToList());
+            return Task.FromResult(dbSet.Where(t => !t.IsDeleted).OrderBy(t => t.Id).Take(parameters.PageSize).Skip(parameters.PageSize * (parameters.PageNumber - 1)).ToList());
         }
 
         public virtual void Attach(T entity)

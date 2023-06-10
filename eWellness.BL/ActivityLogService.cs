@@ -15,42 +15,42 @@ namespace eWellness.BL
             _userRepository = userRepository;
         }
 
-        public virtual ValueTask<EntityEntry<ActivityLog>> AddAsync(ActivityLog entity)
+        public ValueTask<EntityEntry<ActivityLog>> AddAsync(ActivityLog entity)
         {
             return _userRepository.AddAsync(entity);
         }
 
-        public virtual Task AddRangeAsync(IEnumerable<ActivityLog> entities)
+        public Task AddRangeAsync(IEnumerable<ActivityLog> entities)
         {
             return _userRepository.AddRangeAsync(entities);
         }
 
-        public virtual void Remove(ActivityLog entity)
+        public void Remove(ActivityLog entity)
         {
             _userRepository.Remove(entity);
         }
 
-        public virtual void RemoveRange(IEnumerable<ActivityLog> entities)
+        public void RemoveRange(IEnumerable<ActivityLog> entities)
         {
             _userRepository.RemoveRange(entities);
         }
 
-        public virtual void Update(ActivityLog entity)
+        public void Update(ActivityLog entity)
         {
             _userRepository.Update(entity);
         }
 
-        public virtual void UpdateRange(IEnumerable<ActivityLog> entities)
+        public void UpdateRange(IEnumerable<ActivityLog> entities)
         {
             _userRepository.UpdateRange(entities);
         }
 
-        public virtual Task<ActivityLog> GetByIdAsync(int id, bool asNoTracking = false)
+        public Task<ActivityLog> GetByIdAsync(int id, bool asNoTracking = false)
         {
             return _userRepository.GetByIdAsync(id, asNoTracking);
         }
 
-        public virtual void Attach(ActivityLog entity)
+        public void Attach(ActivityLog entity)
         {
             _userRepository.Attach(entity);
         }

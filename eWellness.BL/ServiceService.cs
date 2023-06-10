@@ -1,5 +1,7 @@
 ﻿using eWellness.BL.Common;
+using eWellness.Core.Filters;
 using eWellness.Core.Models;
+using eWellness.DL;
 using eWellness.DL.Common;
 
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -15,42 +17,47 @@ namespace eWellness.BL
             _serviceRepository = serviceRepository;
         }
 
-        public virtual ValueTask<EntityEntry<Service>> AddAsync(Service entity)
+        public ValueTask<EntityEntry<Service>> AddAsync(Service entity)
         {
             return _serviceRepository.AddAsync(entity);
         }
 
-        public virtual Task AddRangeAsync(IEnumerable<Service> entities)
+        public Task AddRangeAsync(IEnumerable<Service> entities)
         {
             return _serviceRepository.AddRangeAsync(entities);
         }
 
-        public virtual void Remove(Service entity)
+        public void Remove(Service entity)
         {
             _serviceRepository.Remove(entity);
         }
 
-        public virtual void RemoveRange(IEnumerable<Service> entities)
+        public void RemoveRange(IEnumerable<Service> entities)
         {
             _serviceRepository.RemoveRange(entities);
         }
 
-        public virtual void Update(Service entity)
+        public void Update(Service entity)
         {
             _serviceRepository.Update(entity);
         }
 
-        public virtual void UpdateRange(IEnumerable<Service> entities)
+        public void UpdateRange(IEnumerable<Service> entities)
         {
             _serviceRepository.UpdateRange(entities);
         }
 
-        public virtual Task<Service> GetByIdAsync(int id, bool asNoTracking = false)
+        public Task<Service> GetByIdAsync(int id, bool asNoTracking = false)
         {
             return _serviceRepository.GetByIdAsync(id, asNoTracking);
         }
 
-        public virtual void Attach(Service entity)
+        public Task<List<Service>> FilterAsync(BasePagingParameters parameters)
+        {
+            return _serviceRepository.Filter(parameters);
+        }
+
+        public void Attach(Service entity)
         {
             _serviceRepository.Attach(entity);
         }

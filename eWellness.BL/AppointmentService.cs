@@ -15,42 +15,42 @@ namespace eWellness.BL
             _appointmentRepository = appointmentRepository;
         }
 
-        public virtual ValueTask<EntityEntry<Appointment>> AddAsync(Appointment entity)
+        public ValueTask<EntityEntry<Appointment>> AddAsync(Appointment entity)
         {
             return _appointmentRepository.AddAsync(entity);
         }
 
-        public virtual Task AddRangeAsync(IEnumerable<Appointment> entities)
+        public Task AddRangeAsync(IEnumerable<Appointment> entities)
         {
             return _appointmentRepository.AddRangeAsync(entities);
         }
 
-        public virtual void Remove(Appointment entity)
+        public void Remove(Appointment entity)
         {
             _appointmentRepository.Remove(entity);
         }
 
-        public virtual void RemoveRange(IEnumerable<Appointment> entities)
+        public void RemoveRange(IEnumerable<Appointment> entities)
         {
             _appointmentRepository.RemoveRange(entities);
         }
 
-        public virtual void Update(Appointment entity)
+        public void Update(Appointment entity)
         {
             _appointmentRepository.Update(entity);
         }
 
-        public virtual void UpdateRange(IEnumerable<Appointment> entities)
+        public void UpdateRange(IEnumerable<Appointment> entities)
         {
             _appointmentRepository.UpdateRange(entities);
         }
 
-        public virtual Task<Appointment> GetByIdAsync(int id, bool asNoTracking = false)
+        public Task<Appointment> GetByIdAsync(int id, bool asNoTracking = false)
         {
             return _appointmentRepository.GetByIdAsync(id, asNoTracking);
         }
 
-        public virtual void Attach(Appointment entity)
+        public void Attach(Appointment entity)
         {
             _appointmentRepository.Attach(entity);
         }

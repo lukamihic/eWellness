@@ -2,6 +2,7 @@
 
 using eWellness.BL.Common;
 using eWellness.Core.Models;
+using eWellness.Core.Filters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,6 +42,29 @@ namespace eWellness.API.Controllers
                     Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
                     Exception = ex.ToString(),
                     LogType = "Error", 
+                    UserId = null
+                });
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET api/<TipsController>
+        [HttpGet]
+        public async Task<ActionResult> GetAll([FromBody] BasePagingParameters filter)
+        {
+            try
+            {
+                return Ok(await _tipService.FilterAsync(filter));
+            }
+            catch (Exception ex)
+            {
+                await _activityLogger.AddAsync(new ActivityLog()
+                {
+                    ActionName = nameof(Get),
+                    Controller = nameof(TipsController),
+                    Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
+                    Exception = ex.ToString(),
+                    LogType = "Error",
                     UserId = null
                 });
                 return BadRequest(ex.Message);

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using eWellness.Core.Filters;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace eWellness.DL.Common
 {
@@ -14,6 +15,8 @@ namespace eWellness.DL.Common
         void UpdateRange(IEnumerable<T> entities);
 
         Task<T> GetByIdAsync(TPrimaryKey id, bool asNoTracking = false);
+        Task<List<T>> Filter(BasePagingParameters parameters);
+
 
         void Attach(T entity);
     }

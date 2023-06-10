@@ -2,8 +2,6 @@
 
 using eWellness.BL.Common;
 using eWellness.Core.Models;
-using eWellness.BL;
-using eWellness.Core.Filters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,18 +9,18 @@ namespace eWellness.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SpecialOffersController : ControllerBase
+    public class AppointmentsController : ControllerBase
     {
-        ISpecialOfferService _specialOfferService { get; set; }
+        IAppointmentService _appointmentService { get; set; }
         IActivityLogService _activityLogger { get; set; }
 
-        public SpecialOffersController(ISpecialOfferService specialOfferService, IActivityLogService activityLogger)
+        public AppointmentsController(IAppointmentService appointmentService, IActivityLogService activityLogger)
         {
-            _specialOfferService = specialOfferService;
+            _appointmentService = appointmentService;
             _activityLogger = activityLogger;
         }
 
-        // GET api/<SpecialOffersController>/5
+        // GET api/<AppointmentsController>/5
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
@@ -32,14 +30,14 @@ namespace eWellness.API.Controllers
                 {
                     throw (new Exception("Id not provided"));
                 }
-                return Ok(await _specialOfferService.GetByIdAsync(id));
+                return Ok(await _appointmentService.GetByIdAsync(id));
             }
             catch (Exception ex)
             {
                 await _activityLogger.AddAsync(new ActivityLog()
                 {
                     ActionName = nameof(Get),
-                    Controller = nameof(SpecialOffersController),
+                    Controller = nameof(AppointmentsController),
                     Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
                     Exception = ex.ToString(),
                     LogType = "Error", 
@@ -49,36 +47,13 @@ namespace eWellness.API.Controllers
             }
         }
 
-        // GET api/<SpecialOffersController>
-        [HttpGet]
-        public async Task<ActionResult> GetAll([FromBody] BasePagingParameters filter)
-        {
-            try
-            {
-                return Ok(await _specialOfferService.FilterAsync(filter));
-            }
-            catch (Exception ex)
-            {
-                await _activityLogger.AddAsync(new ActivityLog()
-                {
-                    ActionName = nameof(Get),
-                    Controller = nameof(SpecialOffersController),
-                    Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
-                    Exception = ex.ToString(),
-                    LogType = "Error",
-                    UserId = null
-                });
-                return BadRequest(ex.Message);
-            }
-        }
-
-        // POST api/<SpecialOffersController>
+        // POST api/<AppointmentsController>
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] SpecialOffer model)
+        public async Task<ActionResult> Post([FromBody] Appointment model)
         {
             try
             {
-                await _specialOfferService.AddAsync(model);
+                await _appointmentService.AddAsync(model);
                 return Ok();
             }
             catch (Exception ex)
@@ -86,7 +61,7 @@ namespace eWellness.API.Controllers
                 await _activityLogger.AddAsync(new ActivityLog()
                 {
                     ActionName = nameof(Post),
-                    Controller = nameof(SpecialOffersController),
+                    Controller = nameof(AppointmentsController),
                     Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
                     Exception = ex.ToString(),
                     LogType = "Error",
@@ -96,9 +71,9 @@ namespace eWellness.API.Controllers
             }
         }
 
-        // PUT api/<SpecialOffersController>/5
+        // PUT api/<AppointmentsController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody] SpecialOffer model)
+        public async Task<ActionResult> Put(int id, [FromBody] Appointment model)
         {
             try
             {
@@ -108,7 +83,7 @@ namespace eWellness.API.Controllers
                 }
 
                 model.Id = id;
-                _specialOfferService.Update(model);
+                _appointmentService.Update(model);
                 return Ok();
             }
             catch (Exception ex)
@@ -116,7 +91,7 @@ namespace eWellness.API.Controllers
                 await _activityLogger.AddAsync(new ActivityLog()
                 {
                     ActionName = nameof(Put),
-                    Controller = nameof(SpecialOffersController),
+                    Controller = nameof(AppointmentsController),
                     Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
                     Exception = ex.ToString(),
                     LogType = "Error",
@@ -126,7 +101,7 @@ namespace eWellness.API.Controllers
             }
         }
 
-        // DELETE api/<SpecialOffersController>/5
+        // DELETE api/<AppointmentsController>/5
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -136,12 +111,12 @@ namespace eWellness.API.Controllers
                 {
                     throw (new Exception("Id not provided"));
                 }
-                var specialOffer = await _specialOfferService.GetByIdAsync(id);
-                if (specialOffer == null)
+                var appointment = await _appointmentService.GetByIdAsync(id);
+                if (appointment == null)
                 {
-                    throw (new Exception("SpecialOffer not found"));
+                    throw (new Exception("Appointment not found"));
                 }
-                _specialOfferService.Remove(specialOffer);
+                _appointmentService.Remove(appointment);
 
                 return Ok();
             }
@@ -150,7 +125,7 @@ namespace eWellness.API.Controllers
                 await _activityLogger.AddAsync(new ActivityLog()
                 {
                     ActionName = nameof(Delete),
-                    Controller = nameof(SpecialOffersController),
+                    Controller = nameof(AppointmentsController),
                     Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
                     Exception = ex.ToString(),
                     LogType = "Error",
