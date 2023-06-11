@@ -1,5 +1,7 @@
 ﻿using eWellness.BL.Common;
 using eWellness.Core.Models;
+using eWellness.Core.Parameters;
+using eWellness.DL;
 using eWellness.DL.Common;
 
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -48,6 +50,11 @@ namespace eWellness.BL
         public Task<Client> GetByIdAsync(int id, bool asNoTracking = false)
         {
             return _clientRepository.GetByIdAsync(id, asNoTracking);
+        }
+
+        public Task<List<Client>> FilterAsync(BaseFilterParameters parameters)
+        {
+            return _clientRepository.Filter(parameters);
         }
 
         public void Attach(Client entity)

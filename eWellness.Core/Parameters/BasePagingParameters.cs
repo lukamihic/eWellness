@@ -1,6 +1,6 @@
-﻿namespace eWellness.Core.Filters
+﻿namespace eWellness.Core.Parameters
 {
-    public class BasePagingParameters
+    public abstract class BasePagingParameters
     {
         public int PageSize { get; set; } = 10;
         public int PageNumber { get; set; } = 1;

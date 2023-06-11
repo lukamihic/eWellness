@@ -1,5 +1,7 @@
 ﻿using eWellness.BL.Common;
 using eWellness.Core.Models;
+using eWellness.Core.Parameters;
+using eWellness.DL;
 using eWellness.DL.Common;
 
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -49,6 +51,12 @@ namespace eWellness.BL
         {
             return _invoiceRepository.GetByIdAsync(id, asNoTracking);
         }
+
+        public Task<List<Invoice>> FilterAsync(BasePagingParameters parameters)
+        {
+            return _invoiceRepository.Filter(parameters);
+        }
+
 
         public void Attach(Invoice entity)
         {

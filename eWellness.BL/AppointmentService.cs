@@ -1,5 +1,7 @@
 ﻿using eWellness.BL.Common;
 using eWellness.Core.Models;
+using eWellness.Core.Parameters;
+using eWellness.DL;
 using eWellness.DL.Common;
 
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -48,6 +50,11 @@ namespace eWellness.BL
         public Task<Appointment> GetByIdAsync(int id, bool asNoTracking = false)
         {
             return _appointmentRepository.GetByIdAsync(id, asNoTracking);
+        }
+
+        public Task<List<Appointment>> FilterAsync(BasePagingParameters parameters)
+        {
+            return _appointmentRepository.Filter(parameters);
         }
 
         public void Attach(Appointment entity)

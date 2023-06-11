@@ -1,4 +1,4 @@
-﻿using eWellness.Core.Filters;
+﻿using eWellness.Core.Parameters;
 using eWellness.Core.Models;
 
 namespace eWellness.BL.Common

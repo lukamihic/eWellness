@@ -2,6 +2,8 @@
 
 using eWellness.BL.Common;
 using eWellness.Core.Models;
+using eWellness.BL;
+using eWellness.Core.Parameters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,6 +43,29 @@ namespace eWellness.API.Controllers
                     Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
                     Exception = ex.ToString(),
                     LogType = "Error", 
+                    UserId = null
+                });
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET api/<AppointmentsController>/all
+        [HttpGet]
+        public async Task<ActionResult> GetAll([FromBody] BasePagingParameters filter)
+        {
+            try
+            {
+                return Ok(await _appointmentService.FilterAsync(filter));
+            }
+            catch (Exception ex)
+            {
+                await _activityLogger.AddAsync(new ActivityLog()
+                {
+                    ActionName = nameof(Get),
+                    Controller = nameof(AppointmentsController),
+                    Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
+                    Exception = ex.ToString(),
+                    LogType = "Error",
                     UserId = null
                 });
                 return BadRequest(ex.Message);

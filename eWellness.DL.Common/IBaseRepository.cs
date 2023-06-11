@@ -1,4 +1,4 @@
-﻿using eWellness.Core.Filters;
+﻿using eWellness.Core.Parameters;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace eWellness.DL.Common

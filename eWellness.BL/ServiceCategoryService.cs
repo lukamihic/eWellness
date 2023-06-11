@@ -1,5 +1,5 @@
 ﻿using eWellness.BL.Common;
-using eWellness.Core.Filters;
+using eWellness.Core.Parameters;
 using eWellness.Core.Models;
 using eWellness.DL;
 using eWellness.DL.Common;

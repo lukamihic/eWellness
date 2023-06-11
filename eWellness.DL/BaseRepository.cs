@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using eWellness.Core;
 using eWellness.Core.Common.Models;
 using eWellness.DL.Common;
-using eWellness.Core.Filters;
+using eWellness.Core.Parameters;
 
 namespace eWellness.DL
 {

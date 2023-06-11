@@ -44,7 +44,24 @@ builder.Services.AddScoped<IServiceCategoryService, ServiceCategoryService>();
 //// SpecialOffers
 builder.Services.AddScoped<ISpecialOfferRepository, SpecialOfferRepository>();
 builder.Services.AddScoped<ISpecialOfferService, SpecialOfferService>();
-
+//// Clients
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
+builder.Services.AddScoped<IClientService, ClientService>();
+//// Employees
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+//// PaymentMethods
+builder.Services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
+builder.Services.AddScoped<IPaymentMethodService, PaymentMethodService>();
+//// Payments
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+//// Invoices
+builder.Services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+builder.Services.AddScoped<IInvoiceService, InvoiceService>();
+//// Services
+builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
 
 var app = builder.Build();
 
