@@ -51,8 +51,9 @@ namespace eWellness.API.Controllers
 
         // GET api/<EmployeesController>/all
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromBody] BaseFilterParameters filter)
+        public async Task<ActionResult> GetAll()
         {
+            var filter = new BaseFilterParameters() { PageNumber = 1, PageSize = int.MaxValue };
             try
             {
                 return Ok(await _employeeService.FilterAsync(filter));

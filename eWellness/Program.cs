@@ -62,6 +62,9 @@ builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 //// Services
 builder.Services.AddScoped<IServiceRepository, ServiceRepository>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+//// Appointments
+builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
+builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
 var app = builder.Build();
 

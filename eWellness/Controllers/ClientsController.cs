@@ -51,7 +51,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<ClientsController>/all
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromBody] BaseFilterParameters filter)
+        public async Task<ActionResult> GetAll([FromQuery] BaseFilterParameters filter)
         {
             try
             {

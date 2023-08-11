@@ -50,7 +50,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<TipsController>
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromBody] BasePagingParameters filter)
+        public async Task<ActionResult> GetAll([FromQuery] BasePagingParameters filter)
         {
             try
             {

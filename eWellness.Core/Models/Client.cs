@@ -1,4 +1,5 @@
 ﻿using eWellness.Core.Common.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eWellness.Core.Models
 {
@@ -11,5 +12,8 @@ namespace eWellness.Core.Models
 
         public User? User { get; set; }
         public int? UserId { get; set; }
+
+        [NotMapped]
+        public string? Name { get; set; }
     }
 }

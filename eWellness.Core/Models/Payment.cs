@@ -1,4 +1,5 @@
 ﻿using eWellness.Core.Common.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eWellness.Core.Models
 {
@@ -14,5 +15,8 @@ namespace eWellness.Core.Models
 
         public int? AppointmentId { get; set; }
         public Appointment? Appointment { get; set; }
+
+        [NotMapped]
+        public string? Name { get; set; }
     }
 }
