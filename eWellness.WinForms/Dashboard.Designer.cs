@@ -64,6 +64,10 @@
             this.Delete = new System.Windows.Forms.DataGridViewButtonColumn();
             this.lnkServiceCategories = new System.Windows.Forms.LinkLabel();
             this.lnkPaymentMethods = new System.Windows.Forms.LinkLabel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.lblToday = new System.Windows.Forms.Label();
+            this.lblPercent = new System.Windows.Forms.Label();
+            this.lblNoApt = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
@@ -366,6 +370,7 @@
             this.btnAdd.TabIndex = 4;
             this.btnAdd.Text = "+";
             this.btnAdd.UseVisualStyleBackColor = false;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // textBox1
             // 
@@ -439,7 +444,7 @@
             // 
             this.lnkServiceCategories.AutoSize = true;
             this.lnkServiceCategories.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(224)))), ((int)(((byte)(147)))));
-            this.lnkServiceCategories.Location = new System.Drawing.Point(133, 486);
+            this.lnkServiceCategories.Location = new System.Drawing.Point(133, 488);
             this.lnkServiceCategories.Name = "lnkServiceCategories";
             this.lnkServiceCategories.Size = new System.Drawing.Size(109, 15);
             this.lnkServiceCategories.TabIndex = 7;
@@ -452,7 +457,7 @@
             // 
             this.lnkPaymentMethods.AutoSize = true;
             this.lnkPaymentMethods.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(224)))), ((int)(((byte)(147)))));
-            this.lnkPaymentMethods.Location = new System.Drawing.Point(133, 486);
+            this.lnkPaymentMethods.Location = new System.Drawing.Point(133, 488);
             this.lnkPaymentMethods.Name = "lnkPaymentMethods";
             this.lnkPaymentMethods.Size = new System.Drawing.Size(99, 15);
             this.lnkPaymentMethods.TabIndex = 8;
@@ -462,11 +467,51 @@
             this.lnkPaymentMethods.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(52)))), ((int)(((byte)(224)))), ((int)(((byte)(147)))));
             this.lnkPaymentMethods.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkPaymentMethods_LinkClicked);
             // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(127, 480);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(167, 23);
+            this.progressBar1.TabIndex = 9;
+            this.progressBar1.Value = 100;
+            // 
+            // lblToday
+            // 
+            this.lblToday.AutoSize = true;
+            this.lblToday.Location = new System.Drawing.Point(127, 464);
+            this.lblToday.Name = "lblToday";
+            this.lblToday.Size = new System.Drawing.Size(116, 15);
+            this.lblToday.TabIndex = 10;
+            this.lblToday.Text = "Današnje rezervacije:";
+            // 
+            // lblPercent
+            // 
+            this.lblPercent.AutoSize = true;
+            this.lblPercent.Location = new System.Drawing.Point(257, 464);
+            this.lblPercent.Name = "lblPercent";
+            this.lblPercent.Size = new System.Drawing.Size(35, 15);
+            this.lblPercent.TabIndex = 11;
+            this.lblPercent.Text = "100%";
+            // 
+            // lblNoApt
+            // 
+            this.lblNoApt.AutoSize = true;
+            this.lblNoApt.BackColor = System.Drawing.SystemColors.Control;
+            this.lblNoApt.Location = new System.Drawing.Point(137, 503);
+            this.lblNoApt.Name = "lblNoApt";
+            this.lblNoApt.Size = new System.Drawing.Size(144, 15);
+            this.lblNoApt.TabIndex = 12;
+            this.lblNoApt.Text = "Nemate rezervacija danas!";
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(863, 526);
+            this.Controls.Add(this.lblNoApt);
+            this.Controls.Add(this.lblPercent);
+            this.Controls.Add(this.lblToday);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.lnkPaymentMethods);
             this.Controls.Add(this.lnkServiceCategories);
             this.Controls.Add(this.dataGridView1);
@@ -542,5 +587,9 @@
         private DataGridViewButtonColumn Edit;
         private DataGridViewButtonColumn Delete;
         private LinkLabel lnkPaymentMethods;
+        private ProgressBar progressBar1;
+        private Label lblToday;
+        private Label lblPercent;
+        private Label lblNoApt;
     }
 }

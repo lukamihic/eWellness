@@ -9,6 +9,6 @@ namespace eWellness.WinForms
     public static class Session
     {
         public static string? LoggedUser;
-        public static string? ActiveMenu;
+        public static string? ActiveMenu = "Usluge";
     }
 }

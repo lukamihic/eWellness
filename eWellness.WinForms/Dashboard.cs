@@ -16,13 +16,13 @@ namespace eWellness.WinForms
         {
             InitializeComponent();
             lblUser.Text = Session.LoggedUser;
-            Toggle(lblServices);
+            Toggle(Session.ActiveMenu == "Usluge" ? lblServices : Session.ActiveMenu == "Termini" ? lblAppointments : lblClients);
 
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
-            Toggle(lblServices);
+            Toggle(Session.ActiveMenu == "Usluge" ? lblServices : Session.ActiveMenu == "Termini" ? lblAppointments : lblClients);
         }
 
         protected async void Toggle(Label label)
@@ -41,6 +41,11 @@ namespace eWellness.WinForms
                     lnkPaymentMethods.Visible = false;
                     lnkServiceCategories.Visible = true;
 
+                    progressBar1.Visible= false;
+                    lblNoApt.Visible= false;
+                    lblPercent.Visible= false;
+                    lblToday.Visible= false;    
+
                     var ds1 = await _servicesService.Get<List<Service>>(initialQuery);
                     dataGridView1.DataSource = ds1;
 
@@ -54,6 +59,11 @@ namespace eWellness.WinForms
 
                     lnkPaymentMethods.Visible = false;
                     lnkServiceCategories.Visible = false;
+
+                    progressBar1.Visible = false;
+                    lblNoApt.Visible = false;
+                    lblPercent.Visible = false;
+                    lblToday.Visible = false;
 
                     var ds2 = await _clientsService.Get<List<Client>>(initialQuery);
                     ds2.ForEach(ds => ds.Name = ds.User!.Name ?? "N/A");
@@ -70,8 +80,19 @@ namespace eWellness.WinForms
                     lnkPaymentMethods.Visible = false;
                     lnkServiceCategories.Visible = false;
 
+                    progressBar1.Visible = true;
+                    lblPercent.Visible = true;
+                    lblToday.Visible = true;
+
                     var ds3 = await _appointmentsService.Get<List<Appointment>>(initialQuery);
                     ds3.ForEach(ds => ds.Name = $"{ds.Service.Name} za: {ds.Client!.User!.Name ?? "N/A"} ({ds.StartTime} - {ds.EndTime})");
+
+                    var todayCount = ds3.Count(d => d.StartTime.Date == DateTime.Now.Date && !d.IsDeleted);
+                    var percent = (ds3.Count() /  todayCount == 0 ? ds3.Count() : ds3.Count(d => d.StartTime.Date == DateTime.Now.Date)) * 100m;
+                    lblPercent.Text = $"{percent}%";
+                    progressBar1.Value = int.Parse(percent.ToString());
+
+                    lblNoApt.Visible = todayCount == 0;
 
                     dataGridView1.DataSource = ds3;
                     break;
@@ -84,6 +105,11 @@ namespace eWellness.WinForms
 
                     lnkPaymentMethods.Visible = false;
                     lnkServiceCategories.Visible = false;
+
+                    progressBar1.Visible = false;
+                    lblNoApt.Visible = false;
+                    lblPercent.Visible = false;
+                    lblToday.Visible = false;
 
                     var ds4 = await _specialOffersService.Get<List<SpecialOffer>>(initialQuery);
                     ds4.ForEach(ds => ds.Name = $"{ds.Name} (vrijedi do: {ds.OfferExpirationDate.ToShortDateString()})" ?? "N/A");
@@ -99,6 +125,11 @@ namespace eWellness.WinForms
 
                     lnkPaymentMethods.Visible = true;
                     lnkServiceCategories.Visible = false;
+
+                    progressBar1.Visible = false;
+                    lblNoApt.Visible = false;
+                    lblPercent.Visible = false;
+                    lblToday.Visible = false;
 
                     var ds5 = await _paymentsService.Get<List<Payment>>(initialQuery);
                     ds5.ForEach(ds => ds.Name = $"{ds.Appointment!.Client!.Name ?? "N/A"} - {ds.Appointment!.StartTime.ToShortDateString() ?? "01-01-0000"} => ${ds.Amount}KM" ?? "N/A");
@@ -261,6 +292,65 @@ namespace eWellness.WinForms
                         MessageBox.Show($"Dogodila se greška prilikom brisanja: \n {ex.Message}", "Greška", MessageBoxButtons.OK ,MessageBoxIcon.Error);
                     }
                 }
+            }
+            if(e.ColumnIndex == 2)
+            {
+                var obj = dataGridView1.Rows[e.RowIndex];
+                var id = int.Parse(obj.Cells[0].Value.ToString() ?? "-1");
+
+                switch (Session.ActiveMenu)
+                {
+                    case "Usluge":
+                        this.Hide();
+                        var services = new Services(id);
+                        services.Show();
+                        break;
+                    case "Termini":
+                        this.Hide();
+                        var appointments = new Appointments(id);
+                        appointments.Show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+            if (e.ColumnIndex == 3)
+            {
+                var obj = dataGridView1.Rows[e.RowIndex];
+                var id = int.Parse(obj.Cells[0].Value.ToString() ?? "-1");
+
+                switch (Session.ActiveMenu)
+                {
+                    case "Usluge":
+                        this.Hide();
+                        var services = new Services(id, true);
+                        services.Show();
+                        break;
+                    case "Termini":
+                        this.Hide();
+                        var appointments = new Appointments(id, true);
+                        appointments.Show();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            switch (Session.ActiveMenu)
+            {
+                case "Usluge":
+                    var services = new Services(null, true);
+                    services.Show();
+                    break;
+                case "Termini":
+                    var appointments = new Appointments(null, true);
+                    appointments.Show();
+                    break;
+                default:
+                    break;
             }
         }
     }

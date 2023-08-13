@@ -95,7 +95,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.panel1);
             this.Name = "ServiceCategories";
-            this.Text = "eWellness :: Admin | Načini plaćanja";
+            this.Text = "eWellness :: Admin | Kategorije usluga";
             this.Load += new System.EventHandler(this.PaymentMethods_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

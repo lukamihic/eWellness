@@ -12,7 +12,7 @@ namespace eWellness.Core.Models
         public Employee? Employee { get; set; }
 
         public int ServiceId { get; set; }
-        public Service Service { get; set; } = null!;
+        public Service? Service { get; set; } = null!;
 
         public int? SpecialOfferId { get; set; }
         public SpecialOffer? SpecialOffer { get; set; }
