@@ -34,7 +34,8 @@ public class APIService
 
     public async Task<T> Post<T>(object request)
     {
-        return await $"{_endpoint}{_resource}".PostJsonAsync(request).ReceiveJson<T>();
+        var result = await $"{_endpoint}{_resource}".PostJsonAsync(request).ReceiveJson<T>();
+        return result;
     }
 
     public async Task<T> Put<T>(int id, object request)

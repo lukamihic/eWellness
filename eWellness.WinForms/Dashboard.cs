@@ -16,13 +16,13 @@ namespace eWellness.WinForms
         {
             InitializeComponent();
             lblUser.Text = Session.LoggedUser;
-            Toggle(Session.ActiveMenu == "Usluge" ? lblServices : Session.ActiveMenu == "Termini" ? lblAppointments : lblClients);
+            Toggle(Session.ActiveMenu == "Usluge" ? lblServices : Session.ActiveMenu == "Termini" ? lblAppointments : Session.ActiveMenu == "Klijenti" ? lblClients : Session.ActiveMenu == "Popusti" ? lblDiscount : lblPayments);
 
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
         {
-            Toggle(Session.ActiveMenu == "Usluge" ? lblServices : Session.ActiveMenu == "Termini" ? lblAppointments : lblClients);
+            Toggle(Session.ActiveMenu == "Usluge" ? lblServices : Session.ActiveMenu == "Termini" ? lblAppointments : Session.ActiveMenu == "Klijenti" ? lblClients : Session.ActiveMenu == "Popusti" ? lblDiscount : lblPayments);
         }
 
         protected async void Toggle(Label label)
@@ -88,7 +88,7 @@ namespace eWellness.WinForms
                     ds3.ForEach(ds => ds.Name = $"{ds.Service.Name} za: {ds.Client!.User!.Name ?? "N/A"} ({ds.StartTime} - {ds.EndTime})");
 
                     var todayCount = ds3.Count(d => d.StartTime.Date == DateTime.Now.Date && !d.IsDeleted);
-                    var percent = (ds3.Count() /  todayCount == 0 ? ds3.Count() : ds3.Count(d => d.StartTime.Date == DateTime.Now.Date)) * 100m;
+                    var percent = ((todayCount == 0 ? ds3.Count() : ds3.Count(d => d.StartTime < DateTime.Now)) / ds3.Count()) * 100m;
                     lblPercent.Text = $"{percent}%";
                     progressBar1.Value = int.Parse(percent.ToString());
 
@@ -132,7 +132,7 @@ namespace eWellness.WinForms
                     lblToday.Visible = false;
 
                     var ds5 = await _paymentsService.Get<List<Payment>>(initialQuery);
-                    ds5.ForEach(ds => ds.Name = $"{ds.Appointment!.Client!.Name ?? "N/A"} - {ds.Appointment!.StartTime.ToShortDateString() ?? "01-01-0000"} => ${ds.Amount}KM" ?? "N/A");
+                    ds5.ForEach(ds => ds.Name = $"{ds.Appointment!.Client!.User!.Name ?? "N/A"} - {ds.Appointment!.StartTime.ToShortDateString() ?? "01-01-0000"} => {ds.Amount}KM" ?? "N/A");
 
                     dataGridView1.DataSource = ds5;
                     break;
@@ -310,6 +310,21 @@ namespace eWellness.WinForms
                         var appointments = new Appointments(id);
                         appointments.Show();
                         break;
+                    case "Klijenti":
+                        this.Hide();
+                        var clients = new Clients(id);
+                        clients.Show();
+                        break;
+                    case "Popusti":
+                        this.Hide();
+                        var specialOffers = new SpecialOffers(id);
+                        specialOffers.Show();
+                        break;
+                    case "Uplate":
+                        this.Hide();
+                        var payments = new Payments(id);
+                        payments.Show();
+                        break;
                     default:
                         break;
                 }
@@ -331,6 +346,21 @@ namespace eWellness.WinForms
                         var appointments = new Appointments(id, true);
                         appointments.Show();
                         break;
+                    case "Klijenti":
+                        this.Hide();
+                        var clients = new Clients(id, true);
+                        clients.Show();
+                        break;
+                    case "Popusti":
+                        this.Hide();
+                        var specialOffers = new SpecialOffers(id, true);
+                        specialOffers.Show();
+                        break;
+                    case "Uplate":
+                        this.Hide();
+                        var payments = new Payments(id, true);
+                        payments.Show();
+                        break;
                     default:
                         break;
                 }
@@ -348,6 +378,21 @@ namespace eWellness.WinForms
                 case "Termini":
                     var appointments = new Appointments(null, true);
                     appointments.Show();
+                    break;
+                case "Klijenti":
+                    this.Hide();
+                    var clients = new Clients(null, true);
+                    clients.Show();
+                    break;
+                case "Popusti":
+                    this.Hide();
+                    var specialOffers = new SpecialOffers(null, true);
+                    specialOffers.Show();
+                    break;
+                case "Uplate":
+                    this.Hide();
+                    var payments = new Payments(null, true);
+                    payments.Show();
                     break;
                 default:
                     break;

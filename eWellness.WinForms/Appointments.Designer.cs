@@ -271,7 +271,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel1);
             this.Name = "Appointments";
-            this.Text = "Appointments";
+            this.Text = "eWellness :: Admin | Termini";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Appointments_FormClosed);
             this.Load += new System.EventHandler(this.Appointments_Load);
             this.panel1.ResumeLayout(false);

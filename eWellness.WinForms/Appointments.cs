@@ -1,5 +1,6 @@
 ﻿using eWellness.Core.Models;
 using Flurl.Util;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace eWellness.WinForms
@@ -16,6 +17,13 @@ namespace eWellness.WinForms
         {
             InitializeComponent();
             appointmentId = id;
+
+            dtpStartTime.Format = DateTimePickerFormat.Custom;
+            dtpStartTime.CustomFormat = "MM/dd/yyyy hh:mm";
+
+            dtpEndTime.Format = DateTimePickerFormat.Custom;
+            dtpEndTime.CustomFormat = "MM/dd/yyyy hh:mm";
+
             if (!isEditable)
             {
                 cmbClient.Enabled = false;
@@ -95,12 +103,12 @@ namespace eWellness.WinForms
                 }
                 else
                 {
+                    var client = (await _clientsService.Get<List<Client>>()).FirstOrDefault(c => c.Id == (int)cmbClient.SelectedValue);
+                    await _clientsService.Put<Client>(client!.Id, new { lastAppointment = dtpStartTime.Value.ToInvariantString(), totalAppointments = client.TotalAppointments + 1, isMember = client.IsMember, membershipExpirationDate = client.MembershipExpirationDate.ToInvariantString(), userId = client.UserId });
                     await _appointmentsService.Post<Appointment>(new { clientId = cmbClient.SelectedValue, employeeId = cmbEmployee.SelectedValue, serviceId = cmbService.SelectedValue, specialOfferId = (int)cmbSpecialOffer.SelectedValue == 0 ? null : cmbSpecialOffer.SelectedValue, notes = txtNotes.Text, status = txtStatus.Text, totalPrice = decimal.Parse(txtPrice.Text), startTime = dtpStartTime.Value.ToInvariantString(), endTime = dtpEndTime.Value.ToInvariantString() });
                 }
                 MessageBox.Show("Uspješno ste spasili promjene");
                 this.Close();
-                var dashboard = new Dashboard();
-                dashboard.Show();
             }
             catch (Exception ex)
             {

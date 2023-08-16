@@ -53,8 +53,8 @@ namespace eWellness.API.Controllers
         {
             try
             {
-                await _userService.AddAsync(model);
-                return Ok();
+                var user = await _userService.AddAsync(model);
+                return Ok(user.Entity);
             }
             catch (Exception ex)
             {
