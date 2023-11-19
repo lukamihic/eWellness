@@ -84,5 +84,20 @@ namespace eWellness.WinForms
             var dashboard = new Dashboard();
             dashboard.Show();
         }
+
+        private void txtName_Validating(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                e.Cancel = true;
+                txtName.Focus();
+                errorProvider1.SetError(txtName, "Ime ne smije biti prazno!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(txtName, "");
+            }
+        }
     }
 }

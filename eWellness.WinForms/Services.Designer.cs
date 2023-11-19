@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.txtName = new System.Windows.Forms.TextBox();
@@ -46,7 +47,9 @@
             this.txtImageUrl = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.lnkImageURL = new System.Windows.Forms.LinkLabel();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -75,6 +78,7 @@
             this.txtName.Name = "txtName";
             this.txtName.Size = new System.Drawing.Size(682, 23);
             this.txtName.TabIndex = 1;
+            this.txtName.Validating += new System.ComponentModel.CancelEventHandler(this.txtName_Validating);
             // 
             // label2
             // 
@@ -211,6 +215,10 @@
             this.lnkImageURL.Visible = false;
             this.lnkImageURL.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkImageURL_LinkClicked);
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // Services
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -239,6 +247,7 @@
             this.Load += new System.EventHandler(this.Services_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -264,5 +273,6 @@
         private TextBox txtImageUrl;
         private Label label8;
         private LinkLabel lnkImageURL;
+        private ErrorProvider errorProvider1;
     }
 }

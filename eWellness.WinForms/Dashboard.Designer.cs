@@ -55,7 +55,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtFilter = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Ime = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -372,12 +372,14 @@
             this.btnAdd.UseVisualStyleBackColor = false;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // textBox1
+            // txtFilter
             // 
-            this.textBox1.Location = new System.Drawing.Point(127, 43);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(727, 23);
-            this.textBox1.TabIndex = 5;
+            this.txtFilter.Location = new System.Drawing.Point(127, 43);
+            this.txtFilter.Name = "txtFilter";
+            this.txtFilter.PlaceholderText = "Pretraga...";
+            this.txtFilter.Size = new System.Drawing.Size(727, 23);
+            this.txtFilter.TabIndex = 5;
+            this.txtFilter.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyUp);
             // 
             // dataGridView1
             // 
@@ -515,7 +517,7 @@
             this.Controls.Add(this.lnkPaymentMethods);
             this.Controls.Add(this.lnkServiceCategories);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtFilter);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -578,7 +580,7 @@
         private Panel panel7;
         private Label lblClients;
         private PictureBox pictureBox4;
-        private TextBox textBox1;
+        private TextBox txtFilter;
         private DataGridView dataGridView1;
         private LinkLabel lnkServiceCategories;
         private DataGridViewTextBoxColumn Id;

@@ -1,7 +1,5 @@
 ﻿using eWellness.Core.Models;
 using Flurl.Util;
-using System.Windows.Forms;
-using System.Xml.Linq;
 
 namespace eWellness.WinForms
 {

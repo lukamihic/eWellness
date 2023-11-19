@@ -33,5 +33,11 @@ namespace eWellness.WinForms
             dashboard.Show();
             this.Hide();
         }
+
+        private void Login_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Application.ExitThread();
+            Environment.Exit(0);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using eWellness.Core.Models;
+using System.Data;
 using System.Windows.Forms;
 
 namespace eWellness.WinForms
@@ -10,14 +11,13 @@ namespace eWellness.WinForms
         private readonly APIService _clientsService = new APIService("Clients");
         private readonly APIService _specialOffersService = new APIService("SpecialOffers");
         private readonly APIService _paymentsService = new APIService("Payments");
-        protected readonly object initialQuery = new { pageSize = 10, pageNumber = 1, descendingSort = false };
+        protected readonly object initialQuery = new { pageSize = int.MaxValue, pageNumber = 1, descendingSort = false };
 
         public Dashboard()
         {
             InitializeComponent();
             lblUser.Text = Session.LoggedUser;
             Toggle(Session.ActiveMenu == "Usluge" ? lblServices : Session.ActiveMenu == "Termini" ? lblAppointments : Session.ActiveMenu == "Klijenti" ? lblClients : Session.ActiveMenu == "Popusti" ? lblDiscount : lblPayments);
-
         }
 
         private void Dashboard_Load(object sender, EventArgs e)
@@ -29,6 +29,7 @@ namespace eWellness.WinForms
         {
             dataGridView1.AutoGenerateColumns = false;
             Session.ActiveMenu = label.Text.Trim();
+            txtFilter.Text = string.Empty;
             switch (label.Text.Trim())
             {
                 case "Usluge":
@@ -393,6 +394,35 @@ namespace eWellness.WinForms
                     this.Hide();
                     var payments = new Payments(null, true);
                     payments.Show();
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void textBox1_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (Session.ActiveMenu)
+            {
+                case "Usluge":
+                    var ds1 = dataGridView1.DataSource as List<Service>;
+                    dataGridView1.DataSource = ds1.Where(ds => ds.Name.ToLower().Contains(txtFilter.Text)).ToList();
+                    break;
+                case "Termini":
+                    var ds2 = dataGridView1.DataSource as List<Appointment>;
+                    dataGridView1.DataSource = ds2.Where(ds => ds.Client.User.Name.ToLower().Contains(txtFilter.Text)).ToList();
+                    break;
+                case "Klijenti":
+                    var ds3 = dataGridView1.DataSource as List<Client>;
+                    dataGridView1.DataSource = ds3.Where(ds => ds.User.Name.ToLower().Contains(txtFilter.Text)).ToList();
+                    break;
+                case "Popusti":
+                    var ds4 = dataGridView1.DataSource as List<SpecialOffer>;
+                    dataGridView1.DataSource = ds4.Where(ds => ds.Name.ToLower().Contains(txtFilter.Text)).ToList();
+                    break;
+                case "Uplate":
+                    var ds5 = dataGridView1.DataSource as List<Payment>;
+                    dataGridView1.DataSource = ds5.Where(ds => ds.Appointment.Client.User.Name.ToLower().Contains(txtFilter.Text)).ToList();
                     break;
                 default:
                     break;
