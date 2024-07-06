@@ -16,6 +16,7 @@ namespace eWellness.Core.Models
         public int? AppointmentId { get; set; }
         public Appointment? Appointment { get; set; }
 
+
         [NotMapped]
         public string? Name { get; set; }
     }

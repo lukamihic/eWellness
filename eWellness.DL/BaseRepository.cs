@@ -84,9 +84,9 @@ namespace eWellness.DL
         public virtual Task<List<T>> Filter(BasePagingParameters parameters)
         {
             var dbSet = DatabaseContext.Set<T>().AsQueryable();
-            if (parameters.DescendingSort)
+            if (parameters != null && parameters.DescendingSort)
                 return Task.FromResult(dbSet.Where(t => !t.IsDeleted).OrderByDescending(t => t.Id).Take(parameters.PageSize).Skip(parameters.PageSize * (parameters.PageNumber - 1)).ToList());
-            return Task.FromResult(dbSet.Where(t => !t.IsDeleted).OrderBy(t => t.Id).Take(parameters.PageSize).Skip(parameters.PageSize * (parameters.PageNumber - 1)).ToList());
+            return Task.FromResult(dbSet.Where(t => !t.IsDeleted).OrderBy(t => t.Id).Take(parameters == null ? int.MaxValue : parameters.PageSize).Skip(parameters == null ? 0 : (parameters.PageSize * (parameters.PageNumber - 1))).ToList());
         }
 
         public virtual void Attach(T entity)

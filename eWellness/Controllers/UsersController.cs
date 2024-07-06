@@ -2,6 +2,7 @@
 
 using eWellness.BL.Common;
 using eWellness.Core.Models;
+using eWellness.API.DTOs;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -41,6 +42,33 @@ namespace eWellness.API.Controllers
                     Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
                     Exception = ex.ToString(),
                     LogType = "Error", 
+                    UserId = null
+                });
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET api/<UsersController>/login
+        [HttpPost("login")]
+        public async Task<ActionResult> Login([FromBody] LoginDTO request)
+        {
+            try
+            {
+                if (request == null)
+                {
+                    throw (new Exception("Login data not provided"));
+                }
+                return Ok(await _userService.Login(request.Email, request.Password));
+            }
+            catch (Exception ex)
+            {
+                await _activityLogger.AddAsync(new ActivityLog()
+                {
+                    ActionName = nameof(Get),
+                    Controller = nameof(UsersController),
+                    Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
+                    Exception = ex.ToString(),
+                    LogType = "Error",
                     UserId = null
                 });
                 return BadRequest(ex.Message);

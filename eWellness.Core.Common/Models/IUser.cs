@@ -10,5 +10,7 @@
         public char Gender { get; set; }
         public string? EmergencyContactName { get; set; }
         public string? EmergencyContactPhone { get; set; }
+        public string? PasswordHash { get; set; }
+        public string? PasswordSalt { get; set; }
     }
 }

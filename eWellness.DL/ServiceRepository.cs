@@ -2,6 +2,7 @@
 using eWellness.DL.Common;
 using eWellness.Core.Models;
 using Microsoft.EntityFrameworkCore;
+using eWellness.Core.Parameters;
 
 namespace eWellness.DL
 {
@@ -15,6 +16,22 @@ namespace eWellness.DL
             var dbSet = DatabaseContext.Set<Service>().AsQueryable().Include(c => c.ServiceCategory);
 
             return dbSet.SingleOrDefaultAsync(e => !e.IsDeleted && Equals(e.Id, id))!;
+        }
+        public override Task<List<Service>> Filter(BasePagingParameters parameters)
+        {
+            return Task.FromResult(DatabaseContext.Set<Service>().AsQueryable().Include(c => c.ServiceCategory).Where(s => !s.IsDeleted).ToList());
+        }
+        public async Task<List<Service>> GetRecommendedServices(int userId)
+        {
+            var serviceCategories = DatabaseContext.Appointments.Include(a => a.Service).ThenInclude(s => s!.ServiceCategory).Where(s => s.ClientId == userId).Select(sc => sc.Service!.ServiceCategory);
+            var mostReserved = serviceCategories.GroupBy(sc => sc)
+                            .OrderByDescending(g => g.Count())
+                            .Select(g => new { Category = g.Key, Count = g.Count() })
+                            .FirstOrDefault();
+
+            var recommendations = DatabaseContext.Services.Where(s => s.ServiceCategoryId == mostReserved!.Category!.Id && !s.IsDeleted).ToListAsync();
+
+            return mostReserved != null ? (await recommendations) : new List<Service>();
         }
     }
 }

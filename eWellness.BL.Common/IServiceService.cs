@@ -6,5 +6,6 @@ namespace eWellness.BL.Common
     public interface IServiceService : IBaseService<Service, int>
     {
         Task<List<Service>> FilterAsync(BasePagingParameters parameters);
+        Task<List<Service>> GetRecommendedServices(int userId);
     }
 }

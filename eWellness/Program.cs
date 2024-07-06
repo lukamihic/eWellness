@@ -5,6 +5,7 @@ using eWellness.BL.Common;
 using eWellness.Core;
 using eWellness.DL;
 using eWellness.DL.Common;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +67,10 @@ builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IAppointmentRepository, AppointmentRepository>();
 builder.Services.AddScoped<IAppointmentService, AppointmentService>();
 
+// RabbitMQ
+builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -75,7 +80,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
+
+app.UseCors(builder =>
+        builder.AllowAnyOrigin()
+               .AllowAnyHeader()
+               .AllowAnyMethod());
 
 app.UseAuthorization();
 

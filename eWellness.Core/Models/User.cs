@@ -1,4 +1,5 @@
 ﻿using eWellness.Core.Common.Models;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace eWellness.Core.Models
 {
@@ -12,6 +13,11 @@ namespace eWellness.Core.Models
         public char Gender { get; set; }
         public string? EmergencyContactName { get; set; }
         public string? EmergencyContactPhone { get; set; }
+        public string? PasswordHash { get; set; }
+        public string? PasswordSalt { get; set; }
+
+        [NotMapped]
+        public string PasswordInput { get; set; }
     }
 
 }

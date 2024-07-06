@@ -5,21 +5,32 @@ using eWellness.DL;
 using eWellness.DL.Common;
 
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.Security.Cryptography;
 
 namespace eWellness.BL
 {
     public class ClientService : IClientService
     {
         protected IClientRepository _clientRepository { get; set; }
+        protected IRabbitMQProducer _rabbitMQProducer { get; set; }
 
-        public ClientService(IClientRepository clientRepository)
+        public ClientService(IClientRepository clientRepository, IRabbitMQProducer rabbitMQProducer)
         {
             _clientRepository = clientRepository;
+            _rabbitMQProducer = rabbitMQProducer;
         }
 
         public ValueTask<EntityEntry<Client>> AddAsync(Client entity)
         {
-            return _clientRepository.AddAsync(entity);
+            var password = HashPassword(entity.User.PasswordInput);
+            entity.User.PasswordHash = password[0];
+            entity.User.PasswordSalt = password[1];
+
+            var client = _clientRepository.AddAsync(entity);
+            
+            _rabbitMQProducer.SendEmailMessage(entity, Core.Enums.MailTypeEnum.NewUser);
+            
+            return client;
         }
 
         public Task AddRangeAsync(IEnumerable<Client> entities)
@@ -55,6 +66,29 @@ namespace eWellness.BL
         public Task<List<Client>> FilterAsync(BaseFilterParameters parameters)
         {
             return _clientRepository.Filter(parameters);
+        }
+
+        //helper methods
+        private static List<string> HashPassword(string password)
+        {
+            // Generate a salt
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            // Create the Rfc2898DeriveBytes and get the hash value
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            // Combine the salt and password bytes for later use
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            // Turn the combined salt+hash into a string for storage
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+            string saltString = Convert.ToBase64String(salt);
+
+            return new List<string>() { savedPasswordHash, saltString };
         }
 
         public void Attach(Client entity)

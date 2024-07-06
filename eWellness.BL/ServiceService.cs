@@ -57,6 +57,11 @@ namespace eWellness.BL
             return _serviceRepository.Filter(parameters);
         }
 
+        public async Task<List<Service>> GetRecommendedServices(int userId)
+        {
+            return await _serviceRepository.GetRecommendedServices(userId);
+        }
+
         public void Attach(Service entity)
         {
             _serviceRepository.Attach(entity);

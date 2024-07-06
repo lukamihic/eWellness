@@ -310,82 +310,82 @@ namespace eWellness.DL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3544),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4120),
                             Description = "Mastercard kartice",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Mastercard",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3541)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4117)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3550),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4130),
                             Description = "Visa kartice",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Visa",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3549)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4127)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3556),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4137),
                             Description = "American Express kartice",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "AMEX",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3554)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4134)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3561),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4143),
                             Description = "Diners Club kartice",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Diners",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3559)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4141)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3567),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4150),
                             Description = "Discovery kartice",
                             IsActive = false,
                             IsDeleted = false,
                             Name = "Discovery",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3565)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4147)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3574),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4159),
                             Description = "Plaćanje vaučerom",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Vaučer",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3572)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4156)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3580),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4166),
                             Description = "Virmansko plaćanje",
                             IsActive = false,
                             IsDeleted = false,
                             Name = "Virman",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3578)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4163)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3585),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4172),
                             Description = "Gotovinsko plaćanje",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Cash",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3583)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4170)
                         });
                 });
 
@@ -472,32 +472,32 @@ namespace eWellness.DL.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3489),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4058),
                             Description = "Različite masaže tijela i lica",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Masaža",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3484)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4052)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3498),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4071),
                             Description = "Različite maderoterapije tijela i lica",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Maderoterapija",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3496)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4069)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3504),
+                            CreatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4078),
                             Description = "Spa prostorije u kojima nema manuelnog rada",
                             IsActive = true,
                             IsDeleted = false,
                             Name = "Spa",
-                            UpdatedAt = new DateTime(2023, 5, 21, 1, 9, 51, 177, DateTimeKind.Local).AddTicks(3502)
+                            UpdatedAt = new DateTime(2024, 7, 4, 23, 28, 2, 968, DateTimeKind.Local).AddTicks(4076)
                         });
                 });
 
@@ -609,6 +609,14 @@ namespace eWellness.DL.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordSalt")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

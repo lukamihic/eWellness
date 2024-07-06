@@ -2,7 +2,6 @@
 
 using eWellness.BL.Common;
 using eWellness.Core.Models;
-using eWellness.BL;
 using eWellness.Core.Parameters;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -56,6 +55,29 @@ namespace eWellness.API.Controllers
             try
             {
                 return Ok(await _serviceService.FilterAsync(filter));
+            }
+            catch (Exception ex)
+            {
+                await _activityLogger.AddAsync(new ActivityLog()
+                {
+                    ActionName = nameof(Get),
+                    Controller = nameof(ServicesController),
+                    Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
+                    Exception = ex.ToString(),
+                    LogType = "Error",
+                    UserId = null
+                });
+                return BadRequest(ex.Message);
+            }
+        }
+
+        // GET api/<ServicesController>/GetRecommendations
+        [HttpGet("GetRecommendations")]
+        public async Task<ActionResult> GetRecommendations([FromQuery] int userId)
+        {
+            try
+            {
+                return Ok(await _serviceService.GetRecommendedServices(userId));
             }
             catch (Exception ex)
             {
