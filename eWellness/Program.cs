@@ -82,6 +82,9 @@ if (app.Environment.IsDevelopment())
 
 //app.UseHttpsRedirection();
 
+//app.Urls.Add("http://*:5000");  // Add this line
+
+
 app.UseCors(builder =>
         builder.AllowAnyOrigin()
                .AllowAnyHeader()
