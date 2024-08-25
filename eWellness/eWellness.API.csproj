@@ -35,6 +35,7 @@
   <ItemGroup>
     <ProjectReference Include="..\eWellness.BL\eWellness.BL.csproj" />
     <ProjectReference Include="..\eWellness.Core\eWellness.Core.csproj" />
+    <ProjectReference Include="..\eWellness.DL\eWellness.DL.csproj" />
   </ItemGroup>
 
 </Project>

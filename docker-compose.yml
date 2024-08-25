@@ -1,6 +1,20 @@
 version: '3.8'
 
 services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      SA_PASSWORD: "Test1234!"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD-SHELL", "sqlcmd -U sa -P Test1234! -Q 'SELECT 1'"]
+      interval: 15s
+      retries: 10
+    networks:
+      - app-network
+
   api:
     build: 
       context: ./
@@ -8,10 +22,21 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - rabbitmq
+      sqlserver:
+        condition: service_started
+      rabbitmq:
+        condition: service_started
+    networks:
+      - app-network
 
   rabbitmq:
     image: rabbitmq:3-management
     ports:
       - "5672:5672"
       - "15672:15672"
+    networks:
+      - app-network
+      
+networks:
+  app-network:
+    driver: bridge

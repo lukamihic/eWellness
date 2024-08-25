@@ -7,13 +7,27 @@ using eWellness.DL;
 using eWellness.DL.Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Ensure SQL server is connected
+Task.Delay(15000);
+
 // Add services to the container.
 builder.Services.AddDbContext<DatabaseContext>(options =>
-options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("Main")));
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("Main"),
+        sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                maxRetryCount: 5, // Number of retry attempts
+                maxRetryDelay: TimeSpan.FromSeconds(10), // Delay between retries
+                errorNumbersToAdd: null // List of error numbers to consider for retries
+            );
+        }
+    )
+);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -73,12 +87,34 @@ builder.Services.AddScoped<IRabbitMQProducer, RabbitMQProducer>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+using (var scope = app.Services.CreateScope())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    var maxRetryCount = 10;
+    var retryDelay = TimeSpan.FromSeconds(10);
+
+    for (int retryAttempt = 0; retryAttempt < maxRetryCount; retryAttempt++)
+    {
+        try
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+            dbContext.Database.Migrate();
+            break;  // Exit the loop if successful
+        }
+        catch (Exception ex)
+        {
+
+            // Wait before the next retry attempt
+            Thread.Sleep(retryDelay);
+        }
+    }
 }
+
+// Configure the HTTP request pipeline.
+//if (app.Environment.IsDevelopment())
+//{
+app.UseSwagger();
+    app.UseSwaggerUI();
+//}
 
 //app.UseHttpsRedirection();
 
