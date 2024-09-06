@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
 using eWellness.Core.Models;
+using System.Security.Cryptography;
 
 namespace eWellness.Core
 {
@@ -36,16 +37,16 @@ namespace eWellness.Core
             {
                 new ServiceCategory {
                     Id = 1,
-                    Name = "Masaža",
-                    Description = "Različite masaže tijela i lica",
+                    Name = "Massage",
+                    Description = "Various face and body massages",
                     IsActive= true,
                     CreatedAt = DateTime.Now
                 },
                 new ServiceCategory
                 {
                     Id = 2,
-                    Name = "Maderoterapija",
-                    Description = "Različite maderoterapije tijela i lica",
+                    Name = "Maderotherapy",
+                    Description = "Various maderotherapies",
                     IsActive= true,
                     CreatedAt = DateTime.Now
                 },
@@ -53,18 +54,81 @@ namespace eWellness.Core
                 {
                     Id = 3,
                     Name = "Spa",
-                    Description = "Spa prostorije u kojima nema manuelnog rada",
+                    Description = "Spa spaces",
                     IsActive= true,
                     CreatedAt = DateTime.Now
                 }
             });
+
+            var password = HashPassword("test");
+
+            modelBuilder.Entity<User>().HasData(new List<User>
+            {
+                new User
+                {
+                    Id = 1,
+                    Address = "Test address no1",
+                    DateOfBirth = DateTime.Now.AddYears(-20),
+                    Email = "desktop",
+                    EmergencyContactName = "N/A",
+                    Gender = 'M',
+                    EmergencyContactPhone = "N/A",
+                    Name = "Desktop App",
+                    PasswordHash =  password[0],
+                    PasswordSalt =  password[1],
+                    Phone = "0000000000"
+                },
+                new User
+                {
+                    Id = 2,
+                    Address = "Test address no2",
+                    DateOfBirth = DateTime.Now.AddYears(-22),
+                    Email = "mobile",
+                    EmergencyContactName = "N/A",
+                    Gender = 'M',
+                    EmergencyContactPhone = "N/A",
+                    Name = "Mobile App",
+                    PasswordHash =  password[0],
+                    PasswordSalt =  password[1],
+                    Phone = "0000000000"
+                }
+            });
+
+            modelBuilder.Entity<Tip>().HasData(new List<Tip>
+            {
+                new Tip
+                {
+                    Id = 1,
+                    Name = "Enjoy :)",
+                    Description = "Welcome to the app, enjoy it!",
+                    IsActive = true,
+                    CreatedByUserId = 1
+                }
+            });
+
+            modelBuilder.Entity<Service>().HasData(new List<Service>
+            {
+                new Service
+                {
+                    Id = 1,
+                    Name = "Full body massage",
+                    Description = "Massage of the whole body for an hour",
+                    Duration = 60,
+                    Price = 40,
+                    IsAvailable = true,
+                    ServiceCategoryId = 1,
+                    ImageUrl = "https://i1.sndcdn.com/artworks-000135911201-ryi7ns-t500x500.jpg"
+                }
+            });
+
+
             modelBuilder.Entity<PaymentMethod>().HasData(new List<PaymentMethod>
             {
                 new PaymentMethod
                 {
                     Id = 1,
                     Name = "Mastercard",
-                    Description = "Mastercard kartice",
+                    Description = "Mastercard cards",
                     IsActive = true,
                     CreatedAt = DateTime.Now
                 },
@@ -72,7 +136,7 @@ namespace eWellness.Core
                 {
                     Id = 2,
                     Name = "Visa",
-                    Description = "Visa kartice",
+                    Description = "Visa cards",
                     IsActive = true,
                     CreatedAt = DateTime.Now
                 },
@@ -88,7 +152,7 @@ namespace eWellness.Core
                 {
                     Id = 4,
                     Name = "Diners",
-                    Description = "Diners Club kartice",
+                    Description = "Diners Club cards",
                     IsActive = true,
                     CreatedAt = DateTime.Now
                 },
@@ -96,15 +160,15 @@ namespace eWellness.Core
                 {
                     Id = 5,
                     Name = "Discovery",
-                    Description = "Discovery kartice",
+                    Description = "Discovery cards",
                     IsActive = false,
                     CreatedAt = DateTime.Now
                 },
                 new PaymentMethod
                 {
                     Id = 6,
-                    Name = "Vaučer",
-                    Description = "Plaćanje vaučerom",
+                    Name = "Voucher",
+                    Description = "Voucher payments",
                     IsActive = true,
                     CreatedAt = DateTime.Now
                 },
@@ -112,7 +176,7 @@ namespace eWellness.Core
                 {
                     Id = 7,
                     Name = "Virman",
-                    Description = "Virmansko plaćanje",
+                    Description = "Pay by bank transfer",
                     IsActive = false,
                     CreatedAt = DateTime.Now
                 },
@@ -120,11 +184,33 @@ namespace eWellness.Core
                 {
                     Id = 8,
                     Name = "Cash",
-                    Description = "Gotovinsko plaćanje",
+                    Description = "Cash payment",
                     IsActive = true,
                     CreatedAt = DateTime.Now
                 }
             });
+        }
+
+        protected static List<string> HashPassword(string password)
+        {
+            // Generate a salt
+            byte[] salt;
+            new RNGCryptoServiceProvider().GetBytes(salt = new byte[16]);
+
+            // Create the Rfc2898DeriveBytes and get the hash value
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000);
+            byte[] hash = pbkdf2.GetBytes(20);
+
+            // Combine the salt and password bytes for later use
+            byte[] hashBytes = new byte[36];
+            Array.Copy(salt, 0, hashBytes, 0, 16);
+            Array.Copy(hash, 0, hashBytes, 16, 20);
+
+            // Turn the combined salt+hash into a string for storage
+            string savedPasswordHash = Convert.ToBase64String(hashBytes);
+            string saltString = Convert.ToBase64String(salt);
+
+            return new List<string>() { savedPasswordHash, saltString };
         }
     }
 }
