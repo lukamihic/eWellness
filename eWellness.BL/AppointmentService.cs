@@ -20,7 +20,13 @@ namespace eWellness.BL
 
         public ValueTask<EntityEntry<Appointment>> AddAsync(Appointment entity)
         {
-            _rabbitMQProducer.SendEmailMessage(entity, Core.Enums.MailTypeEnum.NewAppointment);
+            try
+            {
+                _rabbitMQProducer.SendEmailMessage(entity, Core.Enums.MailTypeEnum.NewAppointment);
+            } catch(Exception e)
+            {
+
+            }
             return _appointmentRepository.AddAsync(entity);
         }
 

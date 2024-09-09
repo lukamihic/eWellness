@@ -94,6 +94,21 @@ namespace eWellness.Core
                 }
             });
 
+            modelBuilder.Entity<Client>().HasData(new List<Client>
+            {
+                new Client
+                {
+                    Id = 1,
+                    IsDeleted= false,
+                    CreatedAt = DateTime.Now,
+                    LastAppointment = DateTime.MinValue,
+                    IsMember = true,
+                    MembershipExpirationDate = DateTime.MaxValue,
+                    TotalAppointments = 0,
+                    UserId = 2
+                }
+            });
+
             modelBuilder.Entity<Tip>().HasData(new List<Tip>
             {
                 new Tip
@@ -103,6 +118,20 @@ namespace eWellness.Core
                     Description = "Welcome to the app, enjoy it!",
                     IsActive = true,
                     CreatedByUserId = 1
+                }
+            });
+
+
+            modelBuilder.Entity<SpecialOffer>().HasData(new List<SpecialOffer>
+            {
+                new SpecialOffer
+                {
+                    Id = 1,
+                    Name = "Enjoy :)",
+                    Description = "Welcome to the app, enjoy it!",
+                    IsActive = true,
+                    OfferExpirationDate = DateTime.MaxValue,
+                    IsDeleted = false,
                 }
             });
 

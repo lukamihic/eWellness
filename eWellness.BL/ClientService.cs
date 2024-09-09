@@ -27,9 +27,15 @@ namespace eWellness.BL
             entity.User.PasswordSalt = password[1];
 
             var client = _clientRepository.AddAsync(entity);
-            
-            _rabbitMQProducer.SendEmailMessage(entity, Core.Enums.MailTypeEnum.NewUser);
-            
+            try
+            {
+                _rabbitMQProducer.SendEmailMessage(entity, Core.Enums.MailTypeEnum.NewUser);
+            }catch (Exception e)
+            {
+
+            }
+
+
             return client;
         }
 

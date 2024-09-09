@@ -58,7 +58,7 @@ consumer.Received += (model, eventArgs) =>
 
             byteContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            client.PostAsync("https://localhost:7085/api/Mailer/welcome", byteContent);
+            client.PostAsync("https://localhost:5122/api/Mailer/welcome", byteContent);
             break;
         default:
             break;
