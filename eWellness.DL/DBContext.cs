@@ -91,7 +91,21 @@ namespace eWellness.Core
                     PasswordHash =  password[0],
                     PasswordSalt =  password[1],
                     Phone = "0000000000"
-                }
+                },
+                new User
+                {
+                    Id = 3,
+                    Address = "Test address no1",
+                    DateOfBirth = DateTime.Now.AddYears(-24),
+                    Email = "test_client",
+                    EmergencyContactName = "N/A",
+                    Gender = 'M',
+                    EmergencyContactPhone = "N/A",
+                    Name = "Test Client",
+                    PasswordHash =  password[0],
+                    PasswordSalt =  password[1],
+                    Phone = "0000000000"
+                },
             });
 
             modelBuilder.Entity<Client>().HasData(new List<Client>
@@ -106,6 +120,17 @@ namespace eWellness.Core
                     MembershipExpirationDate = DateTime.MaxValue,
                     TotalAppointments = 0,
                     UserId = 2
+                },
+                new Client
+                {
+                    Id = 2,
+                    IsDeleted= false,
+                    CreatedAt = DateTime.Now,
+                    LastAppointment = DateTime.MinValue,
+                    IsMember = true,
+                    MembershipExpirationDate = DateTime.MaxValue,
+                    TotalAppointments = 0,
+                    UserId = 3
                 }
             });
 
@@ -268,6 +293,46 @@ namespace eWellness.Core
                     Description = "Cash payment",
                     IsActive = true,
                     CreatedAt = DateTime.Now
+                }
+            });
+
+            modelBuilder.Entity<Appointment>().HasData(new List<Appointment>
+            {
+                new Appointment
+                {
+                    Id = 1,
+                    ClientId = 1,
+                    EndTime = DateTime.Now.AddHours(26),
+                    Notes = "Demo note",
+                    ServiceId = 1,
+                    TotalPrice = 40,
+                    StartTime = DateTime.Now.AddHours(25),
+                    Status = "COMPLETED"
+                },
+                new Appointment
+                {
+                    Id = 2,
+                    ClientId = 2,
+                    EndTime = DateTime.Now.AddHours(50),
+                    Notes = "Demo note",
+                    ServiceId = 1,
+                    TotalPrice = 40,
+                    StartTime = DateTime.Now.AddHours(49),
+                    Status = "RESERVED"
+                }
+            });
+
+            modelBuilder.Entity<Payment>().HasData(new List<Payment>
+            {
+                new Payment
+                {
+                    Id = 1,
+                    AppointmentId = 1,
+                    Date = DateTime.Now,
+                    Fees = 0,
+                    PaymentMethodId = 3,
+                    Amount = 40,
+                    TransactionId = new Guid()
                 }
             });
         }
