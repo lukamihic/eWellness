@@ -109,6 +109,19 @@ namespace eWellness.Core
                 }
             });
 
+            modelBuilder.Entity<Employee>().HasData(new List<Employee>
+            {
+                new Employee
+                {
+                    Id = 1,
+                    IsDeleted= false,
+                    CreatedAt = DateTime.Now,
+                    UserId = 1,
+                    Position = "Admin",
+                    Salary = 5000
+                }
+            });
+
             modelBuilder.Entity<Tip>().HasData(new List<Tip>
             {
                 new Tip
@@ -116,6 +129,14 @@ namespace eWellness.Core
                     Id = 1,
                     Name = "Enjoy :)",
                     Description = "Welcome to the app, enjoy it!",
+                    IsActive = true,
+                    CreatedByUserId = 1
+                },
+                new Tip
+                {
+                    Id = 2,
+                    Name = "Cold baths brrr",
+                    Description = "Cold baths strengthen immunity and improve blood flow.",
                     IsActive = true,
                     CreatedByUserId = 1
                 }
@@ -127,8 +148,17 @@ namespace eWellness.Core
                 new SpecialOffer
                 {
                     Id = 1,
-                    Name = "Enjoy :)",
-                    Description = "Welcome to the app, enjoy it!",
+                    Name = "2 + 1",
+                    Description = "Get three massages for the price of two",
+                    IsActive = true,
+                    OfferExpirationDate = DateTime.MaxValue,
+                    IsDeleted = false,
+                },
+                new SpecialOffer
+                {
+                    Id = 2,
+                    Name = "5 + 2",
+                    Description = "Get seven sauna visits for the price of five",
                     IsActive = true,
                     OfferExpirationDate = DateTime.MaxValue,
                     IsDeleted = false,
@@ -146,6 +176,28 @@ namespace eWellness.Core
                     Price = 40,
                     IsAvailable = true,
                     ServiceCategoryId = 1,
+                    ImageUrl = "https://i1.sndcdn.com/artworks-000135911201-ryi7ns-t500x500.jpg"
+                },
+                new Service
+                {
+                    Id = 2,
+                    Name = "Sauna",
+                    Description = "Sauna visit for half an hour",
+                    Duration = 30,
+                    Price = 10,
+                    IsAvailable = true,
+                    ServiceCategoryId = 3,
+                    ImageUrl = "https://i1.sndcdn.com/artworks-000135911201-ryi7ns-t500x500.jpg"
+                },
+                new Service
+                {
+                    Id = 3,
+                    Name = "Maderotherapy",
+                    Description = "Maderotherapy",
+                    Duration = 30,
+                    Price = 50,
+                    IsAvailable = true,
+                    ServiceCategoryId = 2,
                     ImageUrl = "https://i1.sndcdn.com/artworks-000135911201-ryi7ns-t500x500.jpg"
                 }
             });
