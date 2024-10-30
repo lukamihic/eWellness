@@ -4,12 +4,14 @@ using eWellness.BL.Common;
 using eWellness.Core.Models;
 using eWellness.BL;
 using eWellness.Core.Parameters;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace eWellness.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class SpecialOffersController : ControllerBase
     {
@@ -74,6 +76,7 @@ namespace eWellness.API.Controllers
 
         // POST api/<SpecialOffersController>
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Post([FromBody] SpecialOffer model)
         {
             try
@@ -98,6 +101,7 @@ namespace eWellness.API.Controllers
 
         // PUT api/<SpecialOffersController>/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Put(int id, [FromBody] SpecialOffer model)
         {
             try
@@ -128,7 +132,8 @@ namespace eWellness.API.Controllers
 
         // DELETE api/<SpecialOffersController>/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        [Authorize(Roles = "Admin")]
+        async Task<ActionResult> Delete(int id)
         {
             try
             {

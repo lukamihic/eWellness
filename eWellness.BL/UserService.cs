@@ -50,9 +50,14 @@ namespace eWellness.BL
             _userRepository.UpdateRange(entities);
         }
 
-        public Task<User> GetByIdAsync(int id, bool asNoTracking = false)
+        public async Task<User> GetByIdAsync(int id, bool asNoTracking = false)
         {
-            return _userRepository.GetByIdAsync(id, asNoTracking);
+            var user = await _userRepository.GetByIdAsync(id, asNoTracking);
+            
+            user.PasswordHash = null;
+            user.PasswordSalt = null;
+
+            return user;
         }
 
         public void Attach(User entity)

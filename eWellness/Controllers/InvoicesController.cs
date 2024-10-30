@@ -4,12 +4,14 @@ using eWellness.BL.Common;
 using eWellness.Core.Models;
 using eWellness.BL;
 using eWellness.Core.Parameters;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace eWellness.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class InvoicesController : ControllerBase
     {
@@ -128,6 +130,7 @@ namespace eWellness.API.Controllers
 
         // DELETE api/<InvoicesController>/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
             try
