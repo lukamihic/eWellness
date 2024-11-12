@@ -79,8 +79,8 @@ namespace eWellness.API.Controllers
         {
             try
             {
-                await _appointmentService.AddAsync(model);
-                return Ok();
+                var appointment = await _appointmentService.AddAsync(model, "");
+                return Ok(appointment);
             }
             catch (Exception ex)
             {

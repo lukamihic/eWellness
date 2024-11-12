@@ -332,7 +332,7 @@ namespace eWellness.Core
                     Fees = 0,
                     PaymentMethodId = 3,
                     Amount = 40,
-                    TransactionId = new Guid()
+                    TransactionId = "pi_import_test"
                 }
             });
         }

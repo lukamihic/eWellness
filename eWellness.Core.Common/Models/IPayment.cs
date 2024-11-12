@@ -4,7 +4,7 @@
     {
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
-        public Guid TransactionId { get; set; }
+        public string TransactionId { get; set; }
         public decimal Fees { get; set; }
 
         public int? PaymentMethodId { get; set; }

@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace eWellness.API.Controllers
 {
     [Route("api/[controller]")]
-    [Authorize]
     [ApiController]
     public class ClientsController : ControllerBase
     {
@@ -26,6 +25,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<ClientsController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult> Get(int id)
         {
             try
@@ -101,6 +101,7 @@ namespace eWellness.API.Controllers
 
         // PUT api/<ClientsController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> Put(int id, [FromBody] Client model)
         {
             try

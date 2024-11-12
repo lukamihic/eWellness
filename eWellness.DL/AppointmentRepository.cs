@@ -22,5 +22,9 @@ namespace eWellness.DL
         {
             return Task.FromResult(DatabaseContext.Set<Appointment>().AsQueryable().Include(c => c.Service).Include(c => c.Client).Include(c => c.Employee).Include(c => c.SpecialOffer).Include(c => c.Client!.User).Include(c => c.Employee!.User).Where(apt => !apt.IsDeleted).ToList());
         }
+        public Task<int> SaveChangesAsync()
+        {
+            return DatabaseContext.SaveChangesAsync();
+        }
     }
 }
