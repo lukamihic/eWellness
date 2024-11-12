@@ -18,12 +18,30 @@ namespace eWellness.BL
             _rabbitMQProducer = rabbitMQProducer;
         }
 
+        public async ValueTask<int> AddAsync(Appointment entity, string mailInfo = "")
+        {
+            try
+            {
+                _rabbitMQProducer.SendEmailMessage(entity, Core.Enums.MailTypeEnum.NewAppointment);
+            }
+            catch (Exception e)
+            {
+                // Log exception or handle it appropriately
+            }
+
+            var entry = await _appointmentRepository.AddAsync(entity);
+
+            await _appointmentRepository.SaveChangesAsync();
+
+            return entry.Entity.Id;
+        }
         public ValueTask<EntityEntry<Appointment>> AddAsync(Appointment entity)
         {
             try
             {
                 _rabbitMQProducer.SendEmailMessage(entity, Core.Enums.MailTypeEnum.NewAppointment);
-            } catch(Exception e)
+            }
+            catch (Exception e)
             {
 
             }

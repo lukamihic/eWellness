@@ -4,5 +4,6 @@ namespace eWellness.DL.Common
 {
     public interface IAppointmentRepository : IBaseRepository<Appointment, int>
     {
+        Task<int> SaveChangesAsync();  
     }
 }

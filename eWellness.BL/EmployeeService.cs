@@ -1,4 +1,5 @@
 ﻿using eWellness.BL.Common;
+using eWellness.Core.Common.Models;
 using eWellness.Core.Models;
 using eWellness.Core.Parameters;
 using eWellness.DL.Common;
@@ -46,9 +47,15 @@ namespace eWellness.BL
             _employeeRepository.UpdateRange(entities);
         }
 
-        public Task<Employee> GetByIdAsync(int id, bool asNoTracking = false)
+        public async Task<Employee> GetByIdAsync(int id, bool asNoTracking = false)
         {
-            return _employeeRepository.GetByIdAsync(id, asNoTracking);
+            var employee = await _employeeRepository.GetByIdAsync(id, asNoTracking);
+            if (employee.User != null)
+            {
+                employee.User.PasswordHash = null;
+                employee.User.PasswordSalt = null;
+            }
+            return employee;
         }
 
         public Task<List<Employee>> FilterAsync(BaseFilterParameters parameters)

@@ -4,6 +4,7 @@ using eWellness.BL.Common;
 using eWellness.Core.Models;
 using eWellness.BL;
 using eWellness.Core.Parameters;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,6 +25,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<ClientsController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult> Get(int id)
         {
             try
@@ -51,6 +53,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<ClientsController>/all
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> GetAll([FromQuery] BaseFilterParameters filter)
         {
             try
@@ -98,6 +101,7 @@ namespace eWellness.API.Controllers
 
         // PUT api/<ClientsController>/5
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<ActionResult> Put(int id, [FromBody] Client model)
         {
             try
@@ -128,6 +132,7 @@ namespace eWellness.API.Controllers
 
         // DELETE api/<ClientsController>/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
             try

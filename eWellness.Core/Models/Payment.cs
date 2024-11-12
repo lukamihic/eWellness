@@ -7,7 +7,7 @@ namespace eWellness.Core.Models
     {
         public decimal Amount { get; set; }
         public DateTime Date { get; set; }
-        public Guid TransactionId { get; set; } = new Guid();
+        public string TransactionId { get; set; }
         public decimal Fees { get; set; }
 
         public int? PaymentMethodId { get; set; }

@@ -3,6 +3,14 @@
 using eWellness.BL.Common;
 using eWellness.Core.Models;
 using eWellness.API.DTOs;
+using eWellness.API.Helpers;
+using Microsoft.Extensions.Options;
+using eWellness.Core.Common.Models;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -15,13 +23,17 @@ namespace eWellness.API.Controllers
         IUserService _userService { get; set; }
         IActivityLogService _activityLogger { get; set; }
 
-        public UsersController(IUserService userService, IActivityLogService activityLogger)
+        private readonly JwtSettings _jwtSettings;
+
+        public UsersController(IUserService userService, IActivityLogService activityLogger, IOptions<JwtSettings> jwtSettings)
         {
             _userService = userService;
             _activityLogger = activityLogger;
+            _jwtSettings = jwtSettings.Value;
         }
 
         // GET api/<UsersController>/5
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
@@ -58,7 +70,16 @@ namespace eWellness.API.Controllers
                 {
                     throw (new Exception("Login data not provided"));
                 }
-                return Ok(await _userService.Login(request.Email, request.Password));
+                var userId = await _userService.Login(request.Email, request.Password);
+                if (userId == -1)
+                    return Ok(-1);
+                else
+                {
+                    if(userId == 1)
+                        return Ok(GenerateJwtToken(userId, "Admin", _jwtSettings));
+                    return Ok(GenerateJwtToken(userId, "User", _jwtSettings));
+                }
+
             }
             catch (Exception ex)
             {
@@ -101,6 +122,7 @@ namespace eWellness.API.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Put(int id, [FromBody] User model)
         {
             try
@@ -131,6 +153,7 @@ namespace eWellness.API.Controllers
 
         // DELETE api/<UsersController>/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
             try
@@ -161,6 +184,28 @@ namespace eWellness.API.Controllers
                 });
                 return BadRequest(ex.Message);
             }
+        }
+
+
+        protected string GenerateJwtToken(int userId, string role, JwtSettings jwtSettings)
+        {
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, userId.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.Role, role)
+            };
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: DateTime.UtcNow.AddMinutes(jwtSettings.ExpirationMinutes),
+                signingCredentials: creds
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

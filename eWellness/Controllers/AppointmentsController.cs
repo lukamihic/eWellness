@@ -3,12 +3,14 @@
 using eWellness.BL.Common;
 using eWellness.Core.Models;
 using eWellness.Core.Parameters;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace eWellness.API.Controllers
 {
     [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
     public class AppointmentsController : ControllerBase
     {
@@ -77,8 +79,8 @@ namespace eWellness.API.Controllers
         {
             try
             {
-                await _appointmentService.AddAsync(model);
-                return Ok();
+                var appointment = await _appointmentService.AddAsync(model, "");
+                return Ok(appointment);
             }
             catch (Exception ex)
             {
@@ -127,6 +129,7 @@ namespace eWellness.API.Controllers
 
         // DELETE api/<AppointmentsController>/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
             try
