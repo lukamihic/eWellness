@@ -5,6 +5,9 @@ using eWellness.Core.Models;
 using eWellness.BL;
 using eWellness.Core.Parameters;
 using Microsoft.AspNetCore.Authorization;
+using Stripe;
+using eWellness.API.DTOs;
+using Newtonsoft.Json;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -53,7 +56,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<PaymentsController>/all
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] BasePagingParameters filter)
+        public async Task<ActionResult> GetAll([FromQuery] BaseFilterParameters filter)
         {
             try
             {
@@ -162,5 +165,51 @@ namespace eWellness.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [AllowAnonymous]
+        [HttpPost("create-intent")]
+        public async Task<IActionResult> CreatePaymentIntent([FromBody] PaymentRequest request)
+        {
+            StripeConfiguration.ApiKey = "sk_test_51PSo8zRqhsbpjQAuLmM2KjCnwsyDs4gPzC2LCP109MfSQY10Mk62beynp0O2hlbU1om83VdvuQDVPzjNv1pbVetU00i3kNAuMZ";
+
+            var options = new PaymentIntentCreateOptions
+            {
+                Amount = (long)(request.Amount * 100), // Convert to cents
+                Currency = "eur",
+                PaymentMethodTypes = new List<string> { "card" },
+            };
+
+            var service = new PaymentIntentService();
+            var paymentIntent = await service.CreateAsync(options);
+
+            return Ok(new { client_secret = paymentIntent.ClientSecret });
+        }
+
+        [AllowAnonymous]
+        [HttpPost("webhook")]
+        public async Task<IActionResult> StripeWebhook()
+        {
+            var json = await new StreamReader(HttpContext.Request.Body).ReadToEndAsync();
+
+            try
+            {
+                var stripeEvent = JsonConvert.DeserializeObject<Event>(json); // No signature validation
+
+                if (stripeEvent?.Type == EventTypes.PaymentIntentSucceeded)
+                {
+                    var paymentIntent = stripeEvent.Data.Object as PaymentIntent;
+                    Console.WriteLine($"✅ Payment {paymentIntent?.Id} succeeded.");
+                }
+
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"❌ Webhook error: {e.Message}");
+                return BadRequest($"Webhook error: {e.Message}");
+            }
+        }
+
     }
+
 }

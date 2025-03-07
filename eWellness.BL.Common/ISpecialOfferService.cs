@@ -5,6 +5,6 @@ namespace eWellness.BL.Common
 {
     public interface ISpecialOfferService : IBaseService<SpecialOffer, int>
     {
-        Task<List<SpecialOffer>> FilterAsync(BasePagingParameters parameters);
+        Task<List<SpecialOffer>> FilterAsync(BaseFilterParameters parameters);
     }
 }

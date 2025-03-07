@@ -81,7 +81,7 @@ namespace eWellness.DL
             return dbSet.SingleOrDefaultAsync(e => !e.IsDeleted && Equals(e.Id, id))!;
         }
 
-        public virtual Task<List<T>> Filter(BasePagingParameters parameters)
+        public virtual Task<List<T>> Filter(BaseFilterParameters parameters)
         {
             var dbSet = DatabaseContext.Set<T>().AsQueryable();
             if (parameters != null && parameters.DescendingSort)

@@ -5,6 +5,6 @@ namespace eWellness.BL.Common
 {
     public interface IPaymentMethodService : IBaseService<PaymentMethod, int>
     {
-        Task<List<PaymentMethod>> FilterAsync(BasePagingParameters parameters);
+        Task<List<PaymentMethod>> FilterAsync(BaseFilterParameters parameters);
     }
 }

@@ -51,7 +51,7 @@ namespace eWellness.BL
             return _paymentRepository.GetByIdAsync(id, asNoTracking);
         }
 
-        public Task<List<Payment>> FilterAsync(BasePagingParameters parameters)
+        public Task<List<Payment>> FilterAsync(BaseFilterParameters parameters)
         {
             return _paymentRepository.Filter(parameters);
         }

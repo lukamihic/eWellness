@@ -52,7 +52,7 @@ namespace eWellness.BL
             return _serviceRepository.GetByIdAsync(id, asNoTracking);
         }
 
-        public Task<List<Service>> FilterAsync(BasePagingParameters parameters)
+        public Task<List<Service>> FilterAsync(BaseFilterParameters parameters)
         {
             return _serviceRepository.Filter(parameters);
         }

@@ -53,7 +53,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<SpecialOffersController>
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] BasePagingParameters filter)
+        public async Task<ActionResult> GetAll([FromQuery] BaseFilterParameters filter)
         {
             try
             {
@@ -133,7 +133,7 @@ namespace eWellness.API.Controllers
         // DELETE api/<SpecialOffersController>/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {

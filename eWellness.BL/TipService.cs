@@ -51,7 +51,7 @@ namespace eWellness.BL
             return _tipRepository.GetByIdAsync(id, asNoTracking);
         }
 
-        public Task<List<Tip>> FilterAsync(BasePagingParameters parameters)
+        public Task<List<Tip>> FilterAsync(BaseFilterParameters parameters)
         {
             return _tipRepository.Filter(parameters);
         }

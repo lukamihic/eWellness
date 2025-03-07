@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using QuestPDF.Infrastructure;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -92,6 +93,7 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "eWellness API", Version = "v1" });
 
+
     // Define the security scheme
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -121,6 +123,7 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
 
 var jwtSettings = builder.Configuration.GetSection("JwtSettings").Get<JwtSettings>();
+QuestPDF.Settings.License = LicenseType.Community;
 
 builder.Services.AddAuthentication(options =>
 {

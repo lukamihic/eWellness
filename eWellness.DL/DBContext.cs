@@ -176,7 +176,7 @@ namespace eWellness.Core
                     Name = "2 + 1",
                     Description = "Get three massages for the price of two",
                     IsActive = true,
-                    OfferExpirationDate = DateTime.MaxValue,
+                    OfferExpirationDate = new DateTime(2026,1,1),
                     IsDeleted = false,
                 },
                 new SpecialOffer
@@ -185,7 +185,7 @@ namespace eWellness.Core
                     Name = "5 + 2",
                     Description = "Get seven sauna visits for the price of five",
                     IsActive = true,
-                    OfferExpirationDate = DateTime.MaxValue,
+                    OfferExpirationDate = new DateTime(2026,1,1),
                     IsDeleted = false,
                 }
             });

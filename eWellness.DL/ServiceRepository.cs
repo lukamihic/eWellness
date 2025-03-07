@@ -17,9 +17,9 @@ namespace eWellness.DL
 
             return dbSet.SingleOrDefaultAsync(e => !e.IsDeleted && Equals(e.Id, id))!;
         }
-        public override Task<List<Service>> Filter(BasePagingParameters parameters)
+        public override Task<List<Service>> Filter(BaseFilterParameters parameters)
         {
-            return Task.FromResult(DatabaseContext.Set<Service>().AsQueryable().Include(c => c.ServiceCategory).Where(s => !s.IsDeleted).ToList());
+            return Task.FromResult(DatabaseContext.Set<Service>().AsQueryable().Include(c => c.ServiceCategory).Where(s => !s.IsDeleted && s.Name.Contains(parameters.SearchQuery ?? "")).ToList());
         }
         public async Task<List<Service>> GetRecommendedServices(int userId)
         {

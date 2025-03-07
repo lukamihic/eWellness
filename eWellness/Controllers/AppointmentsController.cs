@@ -4,6 +4,7 @@ using eWellness.BL.Common;
 using eWellness.Core.Models;
 using eWellness.Core.Parameters;
 using Microsoft.AspNetCore.Authorization;
+using System.IO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -52,7 +53,7 @@ namespace eWellness.API.Controllers
 
         // GET api/<AppointmentsController>/all
         [HttpGet]
-        public async Task<ActionResult> GetAll([FromQuery] BasePagingParameters filter)
+        public async Task<ActionResult> GetAll([FromQuery] BaseFilterParameters filter)
         {
             try
             {
@@ -72,6 +73,41 @@ namespace eWellness.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        // GET api/<AppointmentsController>/report
+        [HttpGet("report/pdf")]
+        [AllowAnonymous]
+        public async Task<IActionResult> PDFReport()
+        {
+            try
+            {
+                var fileContent = await _appointmentService.GetPDF();
+
+                if (fileContent == null || fileContent.Length == 0)
+                {
+                    return BadRequest("Failed to generate PDF report.");
+                }
+
+                return new FileContentResult(fileContent, "application/pdf")
+                {
+                    FileDownloadName = "Report.pdf"
+                };
+            }
+            catch (Exception ex)
+            {
+                await _activityLogger.AddAsync(new ActivityLog()
+                {
+                    ActionName = nameof(PDFReport),
+                    Controller = nameof(AppointmentsController),
+                    Device = this.Request.HttpContext.GetServerVariable("HTTP_USER_AGENT"),
+                    Exception = ex.ToString(),
+                    LogType = "Error",
+                    UserId = null
+                });
+                return BadRequest(ex.Message);
+            }
+        }
+
 
         // POST api/<AppointmentsController>
         [HttpPost]

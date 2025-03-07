@@ -18,9 +18,9 @@ namespace eWellness.DL
             return dbSet.SingleOrDefaultAsync(e => !e.IsDeleted && Equals(e.Id, id))!;
         }
 
-        public override Task<List<Appointment>> Filter(BasePagingParameters parameters)
+        public override Task<List<Appointment>> Filter(BaseFilterParameters parameters)
         {
-            return Task.FromResult(DatabaseContext.Set<Appointment>().AsQueryable().Include(c => c.Service).Include(c => c.Client).Include(c => c.Employee).Include(c => c.SpecialOffer).Include(c => c.Client!.User).Include(c => c.Employee!.User).Where(apt => !apt.IsDeleted).ToList());
+            return Task.FromResult(DatabaseContext.Set<Appointment>().AsQueryable().Include(c => c.Service).Include(c => c.Client).Include(c => c.Employee).Include(c => c.SpecialOffer).Include(c => c.Client!.User).Include(c => c.Employee!.User).Where(apt => !apt.IsDeleted && (apt.Client.User.Name.Contains(parameters.SearchQuery ?? "") || apt.Service.Name.Contains(parameters.SearchQuery ?? ""))).ToList());
         }
         public Task<int> SaveChangesAsync()
         {

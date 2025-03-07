@@ -5,6 +5,6 @@ namespace eWellness.BL.Common
 {
     public interface ITipService : IBaseService<Tip, int>
     {
-        Task<List<Tip>> FilterAsync(BasePagingParameters parameters);
+        Task<List<Tip>> FilterAsync(BaseFilterParameters parameters);
     }
 }

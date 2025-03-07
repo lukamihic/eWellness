@@ -10,7 +10,7 @@ WORKDIR /src
 # Copy the solution file and project files
 COPY eWellness.sln ./
 COPY eWellness/eWellness.API.csproj eWellness/
-COPY eWellness.BL/eWellness.BL.csproj eWellness.BL/
+COPY eWellness.BL/*.csproj ./eWellness.BL/
 COPY eWellness.BL.Common/eWellness.BL.Common.csproj eWellness.BL.Common/
 COPY eWellness.Core/eWellness.Core.csproj eWellness.Core/
 COPY eWellness.Core.Common/eWellness.Core.Common.csproj eWellness.Core.Common/

@@ -2,6 +2,6 @@
 {
     public class BaseFilterParameters : BasePagingParameters
     {
-        public string SearchQuery { get; set; } = string.Empty;
+        public string? SearchQuery { get; set; } = string.Empty;
     }
 }

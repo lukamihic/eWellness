@@ -15,7 +15,7 @@ namespace eWellness.DL.Common
         void UpdateRange(IEnumerable<T> entities);
 
         Task<T> GetByIdAsync(TPrimaryKey id, bool asNoTracking = false);
-        Task<List<T>> Filter(BasePagingParameters parameters);
+        Task<List<T>> Filter(BaseFilterParameters parameters);
 
 
         void Attach(T entity);
